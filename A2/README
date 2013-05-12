@@ -1,0 +1,21 @@
+To use the code type make run-part1 and make run-part2 respectively and then
+input the mini-language program you wish to run.
+
+We tested our code using the code included in the part1.py and part2.py
+functions. We also ran a variety of other tests, which mainly consisted of
+running random mini-language programs and seeing if they worked. we also
+performed testing on some of the smaller components like the memory system
+separately before combining it with the parser/generator
+
+OUr code is in many different files. For part 1 the files are
+P1interpreterext.py, P1programext.py, and common.py. The first two are
+modified copies of the files given to us. The third contains the new
+functions calls required. func1.py and func2.py contain the iterative and
+recursive length functions and run them on the interpreter for part1.
+part1.py and part2.py execute the parser generators for both parts and take
+the console input and parse them. Included is a sample program that we used
+to test both. In the second part, the three files are P2interpreterext.py,
+P2programext.py, and P2funcs.py. The first two are slightly modified
+versions of the part1 files. P2funcs.py contains all of the memory
+management classes, and the methods to access and perform operations on
+them.
