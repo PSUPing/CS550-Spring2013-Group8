@@ -1,2 +1,8 @@
 
 .DS_Store
+
+*.pyc
+
+A4/parser.out
+
+A4/parsetab.py
