@@ -67,6 +67,7 @@ class Memory:
 		self.nt={}
 		self.ft={}
 		self.endLabel=''
+		self.art={}
 
 	def getLabel(self):
 		self.lCount+=1
@@ -80,13 +81,13 @@ class Memory:
 			self.ft[value] = 'L' + str(self.lCount - 1)
 			return self.ft[value]
 
-	def getRegister(self) :
-		self.rCount += 1
-		return 'R' + str(self.rCount - 1)
-
 	def getTemp(self):
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
+
+	def getRegister(self):
+		self.rCount+=1
+		return 'R'+str(self.tCount-1)
 
 	def getConstant(self,value):
 		if type(value) != type(0):
@@ -105,7 +106,7 @@ class Memory:
 
 		return None
 
-	def getVariable(self,value):
+	def getVariable(self,value) :
 		if type(value) != type(''):
 			raise Exception('Invalid type')
 		if value in self.nt:
@@ -122,8 +123,39 @@ class Memory:
 
 		return None
 
-mem=Memory()
+class ActivationRecord() : 
+	def __init__(self):
+		self.tCount=0
+		self.nCount=0
+		self.pCount=0
+		self.rCount=0
+		self.params={}
+		self.nt={}
+		self.prevFp=''
+		self.sp=''
 
+	def getParam(self,value) :
+		if type(value) != type(''):
+			raise Exception('Invalid type')
+		if value in self.params:
+			return self.params[value]
+		else:
+			self.params[value]='P'+str(self.pCount)
+			self.nCount+=1
+			return self.params[value]
+
+	def getParamValue(self, parID) : 
+		for value, parCount in self.params.items() : 
+			if parCount == parID : 
+				return value
+
+		return None
+
+	def getTemp(self):
+		self.tCount+=1
+		return 'T(AR)'+str(self.tCount-1)
+
+mem=Memory()
 
 class Expr :
 	'''Virtual base class for expressions in the language'''
@@ -314,8 +346,12 @@ class FunCall( Expr ) :
 	def eval( self, nt, ft ) :
 		return ft[ self.name ].apply( nt, ft, self.argList )
 
-	def translate( self ) : 
-		return "JMP " + mem.ft[self.name] + ";\n"
+	def translate( self ) :
+		mem.sp = mem.getRegister()
+		s = "LDI " + mem.sp + ";\n"
+		s += "STI " + mem.sp + ";\n"
+		s += "JMP " + mem.ft[self.name] + ";\n"
+		return s
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sFunction Call: %s, args:" % (tabstop*depth, self.name)
@@ -395,15 +431,8 @@ class DefineStmt( Stmt ) :
 		ft[ self.name ] = self.proc
 
 	def translate( self ) : 
-		s = ""
-
-		for param in self.proc.parList : 
-			h1 = mem.getVariable(self.name)
-			h2 = mem.getTemp()
-			s += "LDA " + h1 + ";\n"
-			s += "STA " + h2 + ";\n"
-
-		return mem.getFuncLabel(self.name) + ': ' + s + self.proc.translate()
+		mem.art[self.name] = ActivationRecord()
+		return mem.getFuncLabel(self.name) + ': ' + self.proc.translate(self.name)
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sDEFINE %s :" % (tabstop*depth, self.name)
@@ -566,8 +595,16 @@ class Proc :
 			print "Error:  no return value"
 			sys.exit( 2 )
 
-	def translate(self) :
-		return self.body.translate() + "LDI ;\n" + "JMI " + mem.getRegister() + ";\n"
+	def translate(self, ftName) :
+		s = ''
+
+		for parm in self.parList : 
+			parmVar = mem.art[ftName].getParam(parm)
+			parmTemp = mem.art[ftName].getTemp()
+			s += "LDI " + parmVar + ";\n"
+			s += "STI " + parmTemp + ";\n"
+
+		return s + self.body.translate() + "LDI " + mem.art[ftName].sp + ";\n" + "JMI " + mem.art[ftName].sp + ";\n"
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sPROC %s :" % (tabstop*depth, str(self.parList))
