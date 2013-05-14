@@ -373,7 +373,7 @@ class AssignStmt( Stmt ) :
 		else :
 			h1 = self.rhs.getHandle()
 			s += "LDA " + h1 + ";\n"
-		
+
 		h2 = mem.getVariable(self.name)
 		s += "STA " + h2 + ";\n"
 
