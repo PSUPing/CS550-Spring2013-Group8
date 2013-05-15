@@ -61,13 +61,21 @@ class Memory:
 	cCount=0
 	lCount=0
 	ft={}
+	fp='FP'
+	sp='SP'
+	scratch='S1'
 	def __init__(self):
+		self.pCount=0
 		self.tCount=0
 		self.nCount=0
-		self.rCount=0
 		self.nt={}
-		self.endLabel=''
-		self.art={}
+
+	def getScratch(self):
+		return Memory.scratch
+
+	def getParameter(self):
+		self.pCount+=1
+		return 'P'+str(self.pCount-1)
 
 	def getLabel(self):
 		Memory.lCount+=1
@@ -84,10 +92,6 @@ class Memory:
 	def getTemp(self):
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
-
-	def getRegister(self):
-		self.rCount+=1
-		return 'R'+str(self.tCount-1)
 
 	def getConstant(self,value):
 		if type(value) != type(0):
@@ -123,39 +127,7 @@ class Memory:
 
 		return None
 
-class ActivationRecord() : 
-	def __init__(self):
-		self.tCount=0
-		self.nCount=0
-		self.pCount=0
-		self.rCount=0
-		self.params={}
-		self.nt={}
-		self.prevFp=''
-		self.sp=''
-
-	def getParam(self,value) :
-		if type(value) != type(''):
-			raise Exception('Invalid type')
-		if value in self.params:
-			return self.params[value]
-		else:
-			self.params[value]='P'+str(self.pCount)
-			self.nCount+=1
-			return self.params[value]
-
-	def getParamValue(self, parID) : 
-		for value, parCount in self.params.items() : 
-			if parCount == parID : 
-				return value
-
-		return None
-
-	def getTemp(self):
-		self.tCount+=1
-		return 'T(AR)'+str(self.tCount-1)
-
-mem=Memory()
+main=Memory()
 
 class Expr :
 	'''Virtual base class for expressions in the language'''
@@ -170,7 +142,7 @@ class Expr :
 		raise NotImplementedError(
 			'Expr.eval: virtual method.  Must be overridden.' )
 
-	def translate(self):
+	def translate(self,mem):
 		'''Translate the expression into symbolic RAL code'''
 
 		raise NotImplementedError(
@@ -194,8 +166,8 @@ class Number( Expr ) :
 	def __init__( self, v=0 ) :
 		self.value = v
 
-	def translate(self):
-		self.handle=mem.getConstant(self.value)
+	def translate(self,mem):
+		self.handle=Memory.getConstant(self.value)
 		return ''
 		
 	def getHandle(self):
@@ -213,7 +185,7 @@ class Ident( Expr ) :
 	def __init__( self, name ) :
 		self.name = name
 
-	def translate(self):
+	def translate(self,mem):
 		self.handle=mem.getVariable(self.name)
 		return ''
 
@@ -238,7 +210,7 @@ class Times( Expr ) :
 		self.lhs = lhs
 		self.rhs = rhs
 
-	def translate(self):
+	def translate(self,mem):
 		st=self.lhs.translate()
 		s1=self.lhs.getHandle()
 		st+=self.rhs.translate()
@@ -272,7 +244,7 @@ class Plus( Expr ) :
 	def eval( self, nt, ft ) :
 		return self.lhs.eval( nt, ft ) + self.rhs.eval( nt, ft )
 
-	def translate(self):
+	def translate(self,mem):
 		st=self.lhs.translate()
 		s1=self.lhs.getHandle()
 		st+=self.rhs.translate()
@@ -314,7 +286,7 @@ class Minus( Expr ) :
 	def eval( self, nt, ft ) :
 		return self.lhs.eval( nt, ft ) - self.rhs.eval( nt, ft )
 
-	def translate(self):
+	def translate(self,mem):
 		st=self.lhs.translate()
 		s1=self.lhs.getHandle()
 		st+=self.rhs.translate()
@@ -346,12 +318,46 @@ class FunCall( Expr ) :
 	def eval( self, nt, ft ) :
 		return ft[ self.name ].apply( nt, ft, self.argList )
 
-	def translate( self ) :
-		mem.sp = mem.getRegister()
-		s = "LDI " + mem.sp + ";\n"
-		s += "STI " + mem.sp + ";\n"
-		s += "JMP " + mem.ft[self.name] + ";\n"
+	def translate( self,mem ) :
+		func=Memory.ft[self.name]
+		nP=Memory.getConstant(func.mem.pCount)
+		nV=Memory.getConstant(func.mem.nCount)
+		nT=Memory.getConstant(func.mem.tCount)
+		currentParam=mem.getTemp()
+		oldSP=mem.getTemp()
+		s='LDA '+Memory.sp+';\n'
+		s+='STA '+oldSP+';\n'
+		s+= 'LDA '+Memory.fp+';\n'
+		s+= 'STA '+Memory.sp+';\n'
+		s+= 'ADD '+Memory.getConstant(2)+';\n'#one for return address one for
+#previous size
+		s+= 'ADD '+nT+';\n'
+		s+= 'ADD '+nV+';\n'
+		s+= 'ADD '+nP+';\n'
+		s+= 'STA '+Memory.fp+';\n'
+		s+= 'STA '+currentParam+';\n'
+		for i in range(len(self.argList)):
+			self.argList[i].translate()	
+			handle=self.argList[i].getHandle()
+			s+='LDA '+handle+';\n'
+			s+='STI '+currentParam+';\n'
+			s+='LDA '+currentParam+';\n'
+			s+='SUB '+Memory.getConstant(1)+';\n'
+			s+='STA '+currentParam+';\n'
+		s+='CAL '+getFuncLabel(self.name)+';\n'
+		result=mem.getTemp()
+		s+='LDA '+Memory.sp+';\n'
+		s+='ADD '+getConstant(1)+';\n'
+		s+='STA '+result+';\n'
+		self.handle=result
+		s+='LDA '+Memory.sp+';\n'
+		s+='STA '+Memory.fp+';\n'
+		s+='LDA '+oldSP+';\n'
+		s+='STA '+Memory.sp+';\n'
 		return s
+
+	def getHandle(self):
+		return self.handle
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sFunction Call: %s, args:" % (tabstop*depth, self.name)
@@ -398,21 +404,12 @@ class AssignStmt( Stmt ) :
 	def eval( self, nt, ft ) :
 		nt[ self.name ] = self.rhs.eval( nt, ft )
 
-	def translate(self) :
-		s = self.rhs.translate()
-		h1 = ''
-
-		if isinstance(s, Number) : s = ""
-
-		if isinstance(self.rhs, FunCall) :
-			pass
-		else :
-			h1 = self.rhs.getHandle()
-			s += "LDA " + h1 + ";\n"
-
+	def translate(self,mem) :
+		s = self.rhs.translate(mem)
+		h1 = self.rhs.getHandle()
+		s += "LDA " + h1 + ";\n"
 		h2 = mem.getVariable(self.name)
 		s += "STA " + h2 + ";\n"
-
 		return s
 
 	def display( self, nt, ft, depth=0 ) :
@@ -457,18 +454,18 @@ class IfStmt( Stmt ) :
 		else :
 			self.fBody.eval( nt, ft )
 
-	def translate(self):
-		s=self.cond.translate()
+	def translate(self,mem):
+		s=self.cond.translate(mem)
 		c=self.cond.getHandle()
-		l1=mem.getLabel()
-		l2=mem.getLabel()
+		l1=Memory.getLabel()
+		l2=Memory.getLabel()
 		s+="LDA "+c+";\n"
 		s+="JMN "+l1+";\n"
 		s+="JMZ "+l1+";\n"
-		s+=self.tBody.translate()
+		s+=self.tBody.translate(mem)
 		s+="JMP "+l2+";\n"
 		s+=l1+": "
-		s+=self.fBody.translate()
+		s+=self.fBody.translate(mem)
 		s+=l2+": "
 		return s
 
@@ -487,16 +484,16 @@ class WhileStmt( Stmt ) :
 		self.cond = cond
 		self.body = body
 
-	def translate(self):
-		l1=mem.getLabel()
-		l2=mem.getLabel()
+	def translate(self,mem):
+		l1=Memory.getLabel()
+		l2=Memory.getLabel()
 		s=l1+': '
-		s+=self.cond.translate()
+		s+=self.cond.translate(mem)
 		c=self.cond.getHandle()
 		s+="LDA "+c+";\n"
 		s+="JMN "+l2+";\n"
 		s+="JMZ "+l2+";\n"
-		s+=self.body.translate()
+		s+=self.body.translate(mem)
 		s+="JMP "+l1+";\n"
 		s+=l2+': '
 		return s
@@ -526,7 +523,7 @@ class StmtList :
 		for s in self.sl :
 			s.eval( nt, ft )
 
-	def translate(self):
+	def translate(self,mem):
 		s = ''		# For the main program
 		procs = ''  # For the procedures
 		hasProcs = False
