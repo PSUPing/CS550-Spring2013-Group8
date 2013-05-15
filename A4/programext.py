@@ -70,7 +70,7 @@ class Memory:
 		self.nCount=0
 		self.nt={}
 
-	def getScratch(self):
+	def getScratch():
 		return Memory.scratch
 
 	def getParameter(self):
@@ -81,7 +81,7 @@ class Memory:
 		Memory.lCount+=1
 		return 'L'+str(Memory.lCount-1)
 
-	def getFuncLabel(self, value) : 
+	def getFuncLabel(value) : 
 		if value in Memory.ft : 
 			return Memory.ft[value]
 		else : 
@@ -93,7 +93,7 @@ class Memory:
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
 
-	def getConstant(self,value):
+	def getConstant(value):
 		if type(value) != type(0):
 			raise Exception('Invalid type')
 		if value in Memory.constants:
@@ -103,7 +103,7 @@ class Memory:
 			Memory.cCount+=1
 			return Memory.constants[value]
 
-	def getConstantValue(self, consID) : 
+	def getConstantValue(consID) : 
 		for value, consCount in Memory.constants.items() : 
 			if consCount == consID : 
 				return value
@@ -126,8 +126,6 @@ class Memory:
 				return value
 
 		return None
-
-main=Memory()
 
 class Expr :
 	'''Virtual base class for expressions in the language'''
@@ -320,9 +318,9 @@ class FunCall( Expr ) :
 
 	def translate( self,mem ) :
 		func=Memory.ft[self.name]
-		nP=Memory.getConstant(func.mem.pCount)
-		nV=Memory.getConstant(func.mem.nCount)
-		nT=Memory.getConstant(func.mem.tCount)
+		nP=Memory.getConstant(func.pCount)
+		nV=Memory.getConstant(func.nCount)
+		nT=Memory.getConstant(func.tCount)
 		currentParam=mem.getTemp()
 		oldSP=mem.getTemp()
 		s='LDA '+Memory.sp+';\n'
@@ -410,7 +408,7 @@ class AssignStmt( Stmt ) :
 		s += "LDA " + h1 + ";\n"
 		h2 = mem.getVariable(self.name)
 		s += "STA " + h2 + ";\n"
-		return s
+		return (s,'')
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sAssign: %s :=" % (tabstop*depth, self.name)
@@ -427,9 +425,26 @@ class DefineStmt( Stmt ) :
 	def eval( self, nt, ft ) :
 		ft[ self.name ] = self.proc
 
-	def translate( self ) : 
-		mem.art[self.name] = ActivationRecord()
-		return mem.getFuncLabel(self.name) + ': ' + self.proc.translate(self.name)
+	def translate( self,mem ) : 
+		mem2=Memory()
+		s=mem.getFuncLabel(self.name) + ': ' 
+		trans=self.proc.translate(self.name,mem2)[0]
+		s+=trans[0]
+		
+		s+='LDA '+Memory.st+';\n'
+		s+='ADD '+Memory.getConstant(2)+';\n'
+		retObject=mem2.getTemp()
+		s+='STA '+retObject+'\n;'
+		s+='LDA '+mem2.getVariable('return')+';\n'
+		s+='STI '+retObject+';\n'
+		s+='LDA '+Memory.st+';\n'
+		s+='ADD '+Memory.getConstant(1)+';\n'
+		retAddress=mem2.getTemp()
+		s+='STA '+retAddress+'\n;'
+		s+='JMI '+retAddress+';\n'
+		Memory.ft[ self.name ] = self.mem2
+		s+=trans[1]
+		return ('',s)
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sDEFINE %s :" % (tabstop*depth, self.name)
@@ -467,7 +482,7 @@ class IfStmt( Stmt ) :
 		s+=l1+": "
 		s+=self.fBody.translate(mem)
 		s+=l2+": "
-		return s
+		return (s,'')
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sIF" % (tabstop*depth)
@@ -496,7 +511,7 @@ class WhileStmt( Stmt ) :
 		s+=self.body.translate(mem)
 		s+="JMP "+l1+";\n"
 		s+=l2+': '
-		return s
+		return (s,'')
 
 	def eval( self, nt, ft ) :
 		while self.cond.eval( nt, ft ) > 0 :
@@ -526,20 +541,11 @@ class StmtList :
 	def translate(self,mem):
 		s = ''		# For the main program
 		procs = ''  # For the procedures
-		hasProcs = False
-
 		for e in self.sl :
-			if isinstance(e, DefineStmt) :
-				hasProcs = True 
-				procs += e.translate()
-			else : 
-				s += e.translate()
-
-		if hasProcs :
-			mem.endLabel = mem.getLabel()  
-			s += "JMP " + mem.endLabel + ";\n"
-
-		return s + procs
+			trans=e.translate()
+			s+=trans[0]
+			procs+=trans[1]
+		return (s, procs)
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sSTMT LIST" % (tabstop*depth)
@@ -592,16 +598,9 @@ class Proc :
 			print "Error:  no return value"
 			sys.exit( 2 )
 
-	def translate(self, ftName) :
-		s = ''
-
-		for parm in self.parList : 
-			parmVar = mem.art[ftName].getParam(parm)
-			parmTemp = mem.art[ftName].getTemp()
-			s += "LDI " + parmVar + ";\n"
-			s += "STI " + parmTemp + ";\n"
-
-		return s + self.body.translate() + "LDI " + mem.art[ftName].sp + ";\n" + "JMI " + mem.art[ftName].sp + ";\n"
+	def translate(self, mem) :
+		trans=self.body.translate(mem)
+		return (trans[0],trans[1])
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sPROC %s :" % (tabstop*depth, str(self.parList))
@@ -611,8 +610,7 @@ class Proc :
 class Program :
 	
 	def __init__( self, stmtList ) :
-		global mem
-		mem=Memory()
+		self.mem=Memory()
 		self.stmtList = stmtList
 		self.nameTable = {}
 		self.funcTable = {}
@@ -621,16 +619,21 @@ class Program :
 		self.stmtList.eval( self.nameTable, self.funcTable )
 
 	def translate(self) :
-		s = self.stmtList.translate()
-
-		if len(mem.ft) > 0 : 
-			return s + mem.endLabel + ': HLT;\n'
-		else : 
-			return s + 'HLT;\n'
-
-	def getMemory(self):
-		return mem
-	
+		trans = self.stmtList.translate(self.mem)
+		three=Memory.getConstant(3)
+		locs=Memory.getConstant(self.mem.nCount)
+		temp=Memory.getConstant(self.mem.tCount)
+		numC=Memory.getConstant(cCount+1)
+		s='LDA '+numC+';\n'
+		s+='ADD '+three+';\n'
+		s+='STA '+Memory.sp+';\n'
+		s+='ADD '+locs+';\n'
+		s+='ADD '+temps+';\n'
+		s+='STA '+Memory.fp+';\n'
+		s+=trans[0]
+		s+='HLT ;\n'
+		s+=trans[1]
+		
 	def dump( self ) :
 		print "Dump of Symbol Table"
 		print "Name Table"
