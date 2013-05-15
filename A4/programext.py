@@ -57,29 +57,29 @@ tabstop = '  ' # 2 spaces
 
 ######   CLASSES   ##################
 class Memory:
+	constants={}
+	cCount=0
+	lCount=0
+	ft={}
 	def __init__(self):
-		self.constants={}
-		self.cCount=0
 		self.tCount=0
 		self.nCount=0
-		self.lCount=0
 		self.rCount=0
 		self.nt={}
-		self.ft={}
 		self.endLabel=''
 		self.art={}
 
 	def getLabel(self):
-		self.lCount+=1
-		return 'L'+str(self.lCount-1)
+		Memory.lCount+=1
+		return 'L'+str(Memory.lCount-1)
 
 	def getFuncLabel(self, value) : 
-		if value in self.ft : 
-			return self.ft[value]
+		if value in Memory.ft : 
+			return Memory.ft[value]
 		else : 
-			self.lCount += 1
-			self.ft[value] = 'L' + str(self.lCount - 1)
-			return self.ft[value]
+			Memory.lCount += 1
+			Memory.ft[value] = 'L' + str(Memory.lCount - 1)
+			return Memory.ft[value]
 
 	def getTemp(self):
 		self.tCount+=1
@@ -92,15 +92,15 @@ class Memory:
 	def getConstant(self,value):
 		if type(value) != type(0):
 			raise Exception('Invalid type')
-		if value in self.constants:
-			return self.constants[value]	
+		if value in Memory.constants:
+			return Memory.constants[value]	
 		else:
-			self.constants[value]='C'+str(self.cCount)
-			self.cCount+=1
-			return self.constants[value]
+			Memory.constants[value]='C'+str(Memory.cCount)
+			Memory.cCount+=1
+			return Memory.constants[value]
 
 	def getConstantValue(self, consID) : 
-		for value, consCount in self.constants.items() : 
+		for value, consCount in Memory.constants.items() : 
 			if consCount == consID : 
 				return value
 
