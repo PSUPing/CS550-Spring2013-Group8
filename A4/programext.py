@@ -477,12 +477,14 @@ class IfStmt( Stmt ) :
 		s+="LDA "+c+";\n"
 		s+="JMN "+l1+";\n"
 		s+="JMZ "+l1+";\n"
-		s+=self.tBody.translate(mem)
+		trans1=self.tBody.translate(mem)
+		s+=trans1[0]
 		s+="JMP "+l2+";\n"
 		s+=l1+": "
-		s+=self.fBody.translate(mem)
+		trans2=self.fBody.translate(mem)
+		s+=trans2[1]
 		s+=l2+": "
-		return (s,'')
+		return (s,trans1[1]+trans2[1])
 
 	def display( self, nt, ft, depth=0 ) :
 		print "%sIF" % (tabstop*depth)
@@ -508,10 +510,11 @@ class WhileStmt( Stmt ) :
 		s+="LDA "+c+";\n"
 		s+="JMN "+l2+";\n"
 		s+="JMZ "+l2+";\n"
-		s+=self.body.translate(mem)
+		trans=self.body.translate(mem)
+		s+=trans[0]
 		s+="JMP "+l1+";\n"
 		s+=l2+': '
-		return (s,'')
+		return (s,trans[1])
 
 	def eval( self, nt, ft ) :
 		while self.cond.eval( nt, ft ) > 0 :
