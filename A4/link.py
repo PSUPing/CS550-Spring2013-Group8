@@ -1,7 +1,23 @@
 import programext
-
+memFile = "simulator/mem.txt"
+# link method that produces absolute (i.e. hard coded addresses) code, corresponding to the translated symbolic RAL code, that can be simulated on the RAM simulator
 def linker(ralToLink, memObj) :
 	linkedCode = ralToLink
+
+	f = open(memFile, "w+")
+	# switch constant id and constant value in memObj
+	constants_dict = dict(zip(memObj.constants.values(), memObj.constants.keys()))
+	# sort by correct order of constants:
+	# - map "C1"->"1", "C10"->"10", "C134"->"134"
+	# - sort in correct order: 1,10,134
+	sorted_constants_keys = sorted(map(lambda x: x[1:], constants_dict.keys()), key=int) 
+	mem = [constants_dict["C" + i] for i in sorted_constants_keys] 
+	# add all the variables and temps, set up as 0
+	mem += [0 for i in range(memObj.tCount + memObj.cCount)]
+	#print to mem file
+	for i in range(len(mem)):
+		f.write(str(i+1) + " " + str(mem[i]) + " ;\n")
+	f.close()
 	
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address
@@ -30,12 +46,15 @@ def linker(ralToLink, memObj) :
 	locations = {}
 
 	# Loop through all the lines and look for the location identifiers
-	for cmd in instructions : 
+	for i in range(len(instructions)) :
+		cmd = instructions[i]
 		lineNum += 1;
 		if 'L' + str(tempLoc) + ':' in cmd : 
 			locations['L' + str(tempLoc)] = lineNum
 			tempLoc += 1
+			instructions[i]=cmd[(cmd.index(':')+1):].lstrip()
 
+	linkedCode = '\n'.join(instructions)
 	# For all the locations, replace the various jump commands with line numbers
 	for locID, value in locations.items() : 
 		linkedCode = linkedCode.replace('JMN ' + locID, 'JMN ' + str(value))
