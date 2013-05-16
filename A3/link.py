@@ -1,8 +1,20 @@
 import programext
-
+memFile = "simulator/mem.txt"
 # link method that produces absolute (i.e. hard coded addresses) code, corresponding to the translated symbolic RAL code, that can be simulated on the RAM simulator
 def linker(ralToLink, memObj) :
 	linkedCode = ralToLink
+
+	f = open(memFile, "w+")
+	# switch constant id and constant value in memObj
+	constants_dict = dict(zip(memObj.constants.values(), memObj.constants.keys()))
+	# sort by correct order of constants
+	mem = [constants_dict[i] for i in sorted(constants_dict.keys())]
+	# add all the variables and temps, set up as 0
+	mem += [0 for i in range(memObj.tCount + memObj.cCount)]
+	#print to mem file
+	for i in range(len(mem)):
+		f.write(str(i+1) + " " + str(mem[i]) + " ;\n")
+	f.close()
 	
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address
