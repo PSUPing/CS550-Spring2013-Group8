@@ -61,9 +61,11 @@ class Memory:
 	cCount=0
 	lCount=0
 	ft={}
+	ftLabels={}
 	fp='FP'
 	sp='SP'
 	scratch='S1'
+
 	def __init__(self):
 		self.pCount=0
 		self.tCount=0
@@ -81,19 +83,19 @@ class Memory:
 		Memory.lCount+=1
 		return 'L'+str(Memory.lCount-1)
 
-	def getFuncLabel(value) : 
-		if value in Memory.ft : 
-			return Memory.ft[value]
+	def getFuncLabel(self,value) : 
+		if value in Memory.ftLabels : 
+			return Memory.ftLabels[value]
 		else : 
 			Memory.lCount += 1
-			Memory.ft[value] = 'L' + str(Memory.lCount - 1)
-			return Memory.ft[value]
+			Memory.ftLabels[value] = 'L' + str(Memory.lCount - 1)
+			return Memory.ftLabels[value]
 
 	def getTemp(self):
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
 
-	def getConstant(value):
+	def getConstant(self,value):
 		if type(value) != type(0):
 			raise Exception('Invalid type')
 		if value in Memory.constants:
@@ -165,7 +167,7 @@ class Number( Expr ) :
 		self.value = v
 
 	def translate(self,mem):
-		self.handle=Memory.getConstant(self.value)
+		self.handle=mem.getConstant(self.value)
 		return ''
 		
 	def getHandle(self):
@@ -209,9 +211,9 @@ class Times( Expr ) :
 		self.rhs = rhs
 
 	def translate(self,mem):
-		st=self.lhs.translate()
+		st=self.lhs.translate(mem)
 		s1=self.lhs.getHandle()
-		st+=self.rhs.translate()
+		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		st+="LDA "+s1+";\n"
 		st+="MUL "+s2+";\n"
@@ -243,9 +245,9 @@ class Plus( Expr ) :
 		return self.lhs.eval( nt, ft ) + self.rhs.eval( nt, ft )
 
 	def translate(self,mem):
-		st=self.lhs.translate()
+		st=self.lhs.translate(mem)
 		s1=self.lhs.getHandle()
-		st+=self.rhs.translate()
+		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		st+="LDA "+s1+";\n"
 		st+="ADD "+s2+";\n"
@@ -285,9 +287,9 @@ class Minus( Expr ) :
 		return self.lhs.eval( nt, ft ) - self.rhs.eval( nt, ft )
 
 	def translate(self,mem):
-		st=self.lhs.translate()
+		st=self.lhs.translate(mem)
 		s1=self.lhs.getHandle()
-		st+=self.rhs.translate()
+		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		st+="LDA "+s1+";\n"
 		st+="ADD "+s2+";\n"
@@ -318,16 +320,16 @@ class FunCall( Expr ) :
 
 	def translate( self,mem ) :
 		func=Memory.ft[self.name]
-		nP=Memory.getConstant(func.pCount)
-		nV=Memory.getConstant(func.nCount)
-		nT=Memory.getConstant(func.tCount)
+		nP=Memory.getConstant(mem, func.pCount)
+		nV=Memory.getConstant(mem, func.nCount)
+		nT=Memory.getConstant(mem, func.tCount)
 		currentParam=mem.getTemp()
 		oldSP=mem.getTemp()
-		s='LDA '+Memory.sp+';\n'
-		s+='STA '+oldSP+';\n'
+		s="LDA "+Memory.sp+";\n"
+		s+= "STA "+oldSP+";\n"
 		s+= 'LDA '+Memory.fp+';\n'
 		s+= 'STA '+Memory.sp+';\n'
-		s+= 'ADD '+Memory.getConstant(2)+';\n'#one for return address one for
+		s+= 'ADD '+Memory.getConstant(mem, 2)+';\n'#one for return address one for
 #previous size
 		s+= 'ADD '+nT+';\n'
 		s+= 'ADD '+nV+';\n'
@@ -335,17 +337,17 @@ class FunCall( Expr ) :
 		s+= 'STA '+Memory.fp+';\n'
 		s+= 'STA '+currentParam+';\n'
 		for i in range(len(self.argList)):
-			self.argList[i].translate()	
+			self.argList[i].translate(mem)	
 			handle=self.argList[i].getHandle()
 			s+='LDA '+handle+';\n'
 			s+='STI '+currentParam+';\n'
 			s+='LDA '+currentParam+';\n'
-			s+='SUB '+Memory.getConstant(1)+';\n'
+			s+='SUB '+Memory.getConstant(mem, 1)+';\n'
 			s+='STA '+currentParam+';\n'
-		s+='CAL '+getFuncLabel(self.name)+';\n'
+		s+='CAL '+mem.getFuncLabel(self.name)+';\n'
 		result=mem.getTemp()
 		s+='LDA '+Memory.sp+';\n'
-		s+='ADD '+getConstant(1)+';\n'
+		s+='ADD '+mem.getConstant(1)+';\n'
 		s+='STA '+result+';\n'
 		self.handle=result
 		s+='LDA '+Memory.sp+';\n'
@@ -428,22 +430,24 @@ class DefineStmt( Stmt ) :
 	def translate( self,mem ) : 
 		mem2=Memory()
 		s=mem.getFuncLabel(self.name) + ': ' 
-		trans=self.proc.translate(self.name,mem2)[0]
-		s+=trans[0]
+		trans=self.proc.translate(mem2)[0]
+		#Not sure what this was added for
+		#s+=trans[0]
 		
-		s+='LDA '+Memory.st+';\n'
-		s+='ADD '+Memory.getConstant(2)+';\n'
+		s+='LDA '+Memory.sp+';\n'
+		s+='ADD '+Memory.getConstant(mem,2)+';\n'
 		retObject=mem2.getTemp()
-		s+='STA '+retObject+'\n;'
+		s+='STA '+retObject+';\n'
 		s+='LDA '+mem2.getVariable('return')+';\n'
 		s+='STI '+retObject+';\n'
-		s+='LDA '+Memory.st+';\n'
-		s+='ADD '+Memory.getConstant(1)+';\n'
+		s+='LDA '+Memory.sp+';\n'
+		s+='ADD '+Memory.getConstant(mem,1)+';\n'
 		retAddress=mem2.getTemp()
-		s+='STA '+retAddress+'\n;'
+		s+='STA '+retAddress+';\n'
 		s+='JMI '+retAddress+';\n'
-		Memory.ft[ self.name ] = self.mem2
-		s+=trans[1]
+		Memory.ft[ self.name ] = mem2
+		#Not sure what this was added for
+		#s+=trans[1]
 		return ('',s)
 
 	def display( self, nt, ft, depth=0 ) :
@@ -545,7 +549,7 @@ class StmtList :
 		s = ''		# For the main program
 		procs = ''  # For the procedures
 		for e in self.sl :
-			trans=e.translate()
+			trans=e.translate(mem)
 			s+=trans[0]
 			procs+=trans[1]
 		return (s, procs)
@@ -623,19 +627,21 @@ class Program :
 
 	def translate(self) :
 		trans = self.stmtList.translate(self.mem)
-		three=Memory.getConstant(3)
-		locs=Memory.getConstant(self.mem.nCount)
-		temp=Memory.getConstant(self.mem.tCount)
-		numC=Memory.getConstant(cCount+1)
+		three=self.mem.getConstant(3)
+		locs=self.mem.getConstant(self.mem.nCount)
+		temp=self.mem.getConstant(self.mem.tCount)
+		numC=self.mem.getConstant(self.mem.cCount+1)
 		s='LDA '+numC+';\n'
 		s+='ADD '+three+';\n'
 		s+='STA '+Memory.sp+';\n'
 		s+='ADD '+locs+';\n'
-		s+='ADD '+temps+';\n'
+		s+='ADD '+temp+';\n'
 		s+='STA '+Memory.fp+';\n'
 		s+=trans[0]
 		s+='HLT ;\n'
 		s+=trans[1]
+
+		return s
 		
 	def dump( self ) :
 		print "Dump of Symbol Table"
