@@ -7,8 +7,11 @@ def linker(ralToLink, memObj) :
 	f = open(memFile, "w+")
 	# switch constant id and constant value in memObj
 	constants_dict = dict(zip(memObj.constants.values(), memObj.constants.keys()))
-	# sort by correct order of constants
-	mem = [constants_dict[i] for i in sorted(constants_dict.keys())]
+	# sort by correct order of constants:
+	# - map "C1"->"1", "C10"->"10", "C134"->"134"
+	# - sort in correct order: 1,10,134
+	sorted_constants_keys = sorted(map(lambda x: x[1:], constants_dict.keys()), key=int) 
+	mem = [constants_dict["C" + i] for i in sorted_constants_keys] 
 	# add all the variables and temps, set up as 0
 	mem += [0 for i in range(memObj.tCount + memObj.cCount)]
 	#print to mem file
