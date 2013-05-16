@@ -274,7 +274,7 @@ class Minus( Expr ) :
 		st+=self.rhs.translate()
 		s2=self.rhs.getHandle()
 		st+="LDA "+s1+";\n"
-		st+="ADD "+s2+";\n"
+		st+="SUB "+s2+";\n"
 		self.handle=mem.getTemp()
 		st+="STA "+self.handle+";\n"
 		return st

@@ -1,5 +1,6 @@
 import programext
 
+# link method that produces absolute (i.e. hard coded addresses) code, corresponding to the translated symbolic RAL code, that can be simulated on the RAM simulator
 def linker(ralToLink, memObj) :
 	linkedCode = ralToLink
 	
@@ -30,12 +31,15 @@ def linker(ralToLink, memObj) :
 	locations = {}
 
 	# Loop through all the lines and look for the location identifiers
-	for cmd in instructions : 
+	for i in range(len(instructions)) :
+		cmd = instructions[i]
 		lineNum += 1;
 		if 'L' + str(tempLoc) + ':' in cmd : 
 			locations['L' + str(tempLoc)] = lineNum
 			tempLoc += 1
+			instructions[i]=cmd[(cmd.index(':')+1):].lstrip()
 
+	linkedCode = '\n'.join(instructions)
 	# For all the locations, replace the various jump commands with line numbers
 	for locID, value in locations.items() : 
 		linkedCode = linkedCode.replace('JMN ' + locID, 'JMN ' + str(value))

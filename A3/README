@@ -1,0 +1,35 @@
+Group X: CS550 - Assignment 3
+- Kyle
+- Matt
+- DAN
+- Chase
+
+All tasks for assignment 3 are done and packaged. Requirements to run the compiler ar python 2.7 and g++.
+
+GENERAL: The compiler takes a mini program as input, to standard input, then produce a set of RAL instructions,
+runable with the provided simulator
+
+makefile and sample.input are attached for ease of testing. any make command needs a program as an input, so to test the compiler, one can run:
+# to produce RAL instruction set to simulator/prog.txt
+make compile < sample.input
+
+# to clean every trash
+make clean
+
+# to view translated code
+make view-trans < sample.input
+
+# to view optimized code
+make view-op < sample.input
+
+# to view linked code
+make link < sample.input
+
+# to run the sample program without optimization
+make run < sample.input
+
+# to run the sample program with optimization
+make run-op < sample.input
+
+# to read code like maniac
+make view

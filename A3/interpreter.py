@@ -21,8 +21,6 @@
 #
 
 import sys
-import peephole
-import link
 from programext import *
 
 ######   LEXER   ###############################
@@ -114,16 +112,7 @@ import ply.yacc as yacc
 
 def p_program( p ) :
 	'program : stmt_list'
-	P = Program( p[1] )
-	#P.display()
-	print 'Compiling Program'
-	translate=P.translate()
-	print translate+'\n'
-	print 'Providing Peephole Optimization'
-	peepholeCode = peephole.peephole(translate) + "\n"
-	print(peepholeCode)
-	print 'Linking Code'
-	print(link.linker(peepholeCode, P.getMemory()))
+	p[0] = Program( p[1] )
 	
 def p_stmt_list( p ) :
 	'''stmt_list : stmt SEMICOLON stmt_list
@@ -192,10 +181,8 @@ def p_error( p ):
 
 	# now, build the parser
 
-def compile(stringToCompile) :
+
+def parse(stringToParse) :
 	yacc.yacc()
-	yacc.parse(stringToCompile)
+	return yacc.parse(stringToParse)
 
-string1 = "i := 5; q := 0; while i do i := i - 1 od; if i then q := 1 + 5 else q := 1 - 5 fi; q := q * 2"
-
-compile(string1)
