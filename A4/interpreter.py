@@ -130,8 +130,8 @@ def p_program( p ) :
 	#print 'Providing Peephole Optimization'
 	#peepholeCode = peephole.peephole(translate) + "\n"
 	#print(peepholeCode)
-	#print 'Linking Code'
-	#print(link.linker(translate, P.getMemory()))
+	print 'Linking Code'
+	print(link.linker(translate, P.mem))
 	
 def p_stmt_list( p ) :
 	'''stmt_list : stmt SEMICOLON stmt_list
