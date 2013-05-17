@@ -60,8 +60,10 @@ class Memory:
 	constants={}
 	cCount=0
 	lCount=0
+	pCount=0
 	ft={}
 	ftLabels={}
+	parList={}
 	fp='FP'
 	sp='SP'
 	scratch='S1'
@@ -74,6 +76,11 @@ class Memory:
 		self.tCount=0
 		self.nCount=0
 		self.nt={}
+
+	@staticmethod
+	def addParList(name,argList) : 
+		Memory.pCount+=len(argList)
+		Memory.parList[name]=argList
 
 	def getLabel(self):
 		Memory.lCount+=1
@@ -93,16 +100,17 @@ class Memory:
 
 	def transTemp(self,temp,scratch):
 		if temp[0]=='T':
-			index=temp[1:]
+			index=int(temp[1:])
 			s='LDA '+Memory.fp+';\n'
 			s+='SUB '+Memory.getConstant(self.nCount)+';\n'
 			s+='SUB '+Memory.getConstant(index-1)+';\n'
 			s+='STA '+scratch+';\n'
 			return s
 		else:
-			self.transVar(temp,scratch)
+			return self.transVar(temp,scratch)
+
 	def transVar(self,var,scratch):
-		index=var[1:]
+		index=int(var[1:])
 		s='LDA '+Memory.fp+';\n'
 		s+='SUB '+Memory.getConstant(index-1)+';\n'
 		s+='STA '+scratch+';\n'
@@ -130,6 +138,7 @@ class Memory:
 	def getVariable(self,value) :
 		if type(value) != type(''):
 			raise Exception('Invalid type')
+
 		if value in self.nt:
 			return self.nt[value]
 		else:
@@ -231,10 +240,10 @@ class Times( Expr ) :
 		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		self.handle=mem.getTemp()
-		st+=transTemp(self.handle,Memory.scratch)	
+		st+=mem.transTemp(self.handle,Memory.scratch)	
 
-		st+=transTemp(s1,Memory.scratch2)	
-		st+=transTemp(s2,Memory.scratch3)	
+		st+=mem.transTemp(s1,Memory.scratch2)	
+		st+=mem.transTemp(s2,Memory.scratch3)	
 
 		st+="LDI "+Memory.scratch2+";\n"
 		st+="MUL "+Memory.scratch3+";\n"
@@ -271,10 +280,10 @@ class Plus( Expr ) :
 		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		self.handle=mem.getTemp()
-		st+=transTemp(self.handle,Memory.scratch)	
+		st+=mem.transTemp(self.handle,Memory.scratch)	
 
-		st+=transTemp(s1,Memory.scratch2)	
-		st+=transTemp(s2,Memory.scratch3)	
+		st+=mem.transTemp(s1,Memory.scratch2)	
+		st+=mem.transTemp(s2,Memory.scratch3)	
 		st+="LDI "+Memory.scratch2+";\n"
 		st+="ADD "+Memory.scratch3+";\n"
 
@@ -318,10 +327,10 @@ class Minus( Expr ) :
 		st+=self.rhs.translate(mem)
 		s2=self.rhs.getHandle()
 		self.handle=mem.getTemp()
-		st+=transTemp(self.handle,Memory.scratch)	
+		st+=mem.transTemp(self.handle,Memory.scratch)	
 
-		st+=transTemp(s1,Memory.scratch2)	
-		st+=transTemp(s2,Memory.scratch3)	
+		st+=mem.transTemp(s1,Memory.scratch2)	
+		st+=mem.transTemp(s2,Memory.scratch3)	
 		st+="LDI "+Memory.scratch2+";\n"
 		st+="SUB "+Memory.scratch3+";\n"
 
@@ -351,6 +360,7 @@ class FunCall( Expr ) :
 		return ft[ self.name ].apply( nt, ft, self.argList )
 
 	def translate( self,mem ) :
+		Memory.addParList(self.name,self.argList)
 		func=Memory.ft[self.name]
 		nP=Memory.getConstant(func.pCount)
 		nV=Memory.getConstant(func.nCount)
@@ -358,8 +368,8 @@ class FunCall( Expr ) :
 		currentParam=mem.getTemp()
 		oldSP=mem.getTemp()
 
-		s+=transTemp(currentParam.handle,Memory.scratch)	
-		s+=transTemp(oldSP,Memory.scratch2)	
+		s=mem.transTemp(currentParam,Memory.scratch)	
+		s+=mem.transTemp(oldSP,Memory.scratch2)	
 
 		s="LDA "+Memory.sp+";\n"
 		s+= "STI "+Memory.scratch2+";\n"
@@ -375,22 +385,24 @@ class FunCall( Expr ) :
 		for i in range(len(self.argList)):
 			self.argList[i].translate(mem)	
 			handle=self.argList[i].getHandle()
-			par=Memory.ft[self.name].parList[i]
-			dest=mem.getVar(par)
-			s+=transTemp(handle,Memory.scratch2)	
-			s+=transTemp(dest,Memory.scratch)	
+			tempParList=Memory.parList[self.name]
+			par=tempParList[i].getHandle()
+			#par=Memory.ft[self.name].parList[i]
+			dest=mem.getVariable(par)
+			s+=mem.transTemp(handle,Memory.scratch2)	
+			s+=mem.transTemp(dest,Memory.scratch)	
 			s+='LDI '+Memory.scratch2+';\n'
 			s+='STI '+Memory.scratch+';\n'
 		s+='CAL '+mem.getFuncLabel(self.name)+';\n'
 		result=mem.getTemp()
-		s+=transTemp(result,Memory.scratch)	
+		s+=mem.transTemp(result,Memory.scratch)	
 		s+='LDA '+Memory.sp+';\n'
 		s+='ADD '+Memory.getConstant(1)+';\n'
 		s+='STI '+Memory.scratch+';\n'
 		self.handle=result
 		s+='LDA '+Memory.sp+';\n'
 		s+='STA '+Memory.fp+';\n'
-		s+=transTemp(oldSP,Memory.scratch)	
+		s+=mem.transTemp(oldSP,Memory.scratch)	
 		s+='LDI '+Memory.scratch+';\n'
 		s+='STA '+Memory.sp+';\n'
 		return s
@@ -446,10 +458,10 @@ class AssignStmt( Stmt ) :
 	def translate(self,mem) :
 		s = self.rhs.translate(mem)
 		h1 = self.rhs.getHandle()
-		s+=transTemp(h1,Memory.scratch)	
+		s+=mem.transTemp(h1,Memory.scratch)	
 		s += "LDI " + Memory.scratch + ";\n"
 		h2 = mem.getVariable(self.name)
-		s+=transTemp(h2,Memory.scratch)	
+		s+=mem.transTemp(h2,Memory.scratch)	
 		s += "STI " + Memory.scratch + ";\n"
 		return (s,'')
 
@@ -478,13 +490,13 @@ class DefineStmt( Stmt ) :
 
 		s+='STA '+Memory.scratch+';\n'
 		ret=mem2.getVariable('return')
-		s+=transTemp(ret,Memory.scratch2)	
+		s+=mem.transTemp(ret,Memory.scratch2)	
 		s+='LDA '+Memory.scratch2+';\n'
 		s+='STI '+Memory.scratch+';\n'
 		s+='LDA '+Memory.sp+';\n'
 		s+='ADD '+Memory.getConstant(1)+';\n'
 
-		s+=transTemp(retAddress,Memory.scratch)	
+		s+=mem.transTemp(ret,Memory.scratch)	
 		s+='STA '+Memory.scratch+';\n'
 		s+='JMI '+Memory.scratch+';\n'
 		Memory.ft[ self.name ] = mem2
