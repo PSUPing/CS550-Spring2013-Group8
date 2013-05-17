@@ -18,23 +18,43 @@ def linker(ralToLink, memObj) :
 	for i in range(len(mem)):
 		f.write(str(i+1) + " " + str(mem[i]) + " ;\n")
 	f.close()
+
+	spCount = 0
+
+	if "SP" in linkedCode : 
+		spCount += 1
+		linkedCode = linkedCode.replace("SP", str(1))
+
+	scratchCount = 0
+
+	# We only have 5 scratch variables at most
+	for x in range(1, 5) : 
+		if "S" + str(x) in linkedCode : 
+			scratchCount += 1
+			linkedCode = linkedCode.replace("S" + str(x), str(x))
 	
+	fpCount = 0
+
+	if "FP" in linkedCode : 
+		fpCount += 1
+		linkedCode = linkedCode.replace("FP", str(scratchCount + 2 + memObj.cCount + spCount))
+
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address
 	for value, consID in memObj.constants.items() : 
-		currCons = int(consID.replace('C', '')) + 1
+		currCons = int(consID.replace('C', '')) + 1 + spCount + scratchCount + fpCount
 		linkedCode = linkedCode.replace(consID, str(currCons))
 
 	# Memory is organized in the order of constants, variables, then temps
 	# Therefore, the address will be the number of constants added to the 
 	# variable index + 1 (per note above
 	for value, varID in memObj.nt.items() : 
-		currVar = int(varID.replace('V', '')) + 1 + memObj.cCount
+		currVar = int(varID.replace('V', '')) + 1 + memObj.cCount + spCount + scratchCount + fpCount + scratchCount + fpCount
 		linkedCode = linkedCode.replace(varID, str(currVar))
 		
 	# Same concept as the previous for loop, but add in the variables too
 	for temp in range(0, memObj.tCount) :
-		currTemp = temp + 1 + memObj.cCount + memObj.nCount
+		currTemp = temp + 1 + memObj.cCount + memObj.nCount + spCount + scratchCount + fpCount
 		linkedCode = linkedCode.replace('T' + str(temp), str(currTemp))
 	
 	# Each line needs to be counted
