@@ -430,10 +430,8 @@ class DefineStmt( Stmt ) :
 	def translate( self,mem ) : 
 		mem2=Memory()
 		s=mem.getFuncLabel(self.name) + ': ' 
-		trans=self.proc.translate(mem2)[0]
-		#Not sure what this was added for
-		#s+=trans[0]
-		
+		trans=self.proc.translate(mem2)
+		s+=trans[0]
 		s+='LDA '+Memory.sp+';\n'
 		s+='ADD '+Memory.getConstant(mem,2)+';\n'
 		retObject=mem2.getTemp()
@@ -446,8 +444,7 @@ class DefineStmt( Stmt ) :
 		s+='STA '+retAddress+';\n'
 		s+='JMI '+retAddress+';\n'
 		Memory.ft[ self.name ] = mem2
-		#Not sure what this was added for
-		#s+=trans[1]
+		s+=trans[1]
 		return ('',s)
 
 	def display( self, nt, ft, depth=0 ) :
