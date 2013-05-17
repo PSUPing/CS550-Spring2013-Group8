@@ -108,6 +108,7 @@ class Memory:
 		s+='STA '+scratch+';\n'
 		return s
 
+	@staticmethod
 	def getConstant(value):
 		if type(value) != type(0):
 			raise Exception('Invalid type')
@@ -118,6 +119,7 @@ class Memory:
 			Memory.cCount+=1
 			return Memory.constants[value]
 
+	@staticmethod
 	def getConstantValue(consID) : 
 		for value, consCount in Memory.constants.items() : 
 			if consCount == consID : 
