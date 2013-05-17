@@ -95,7 +95,7 @@ class Memory:
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
 
-	def getConstant(self,value):
+	def getConstant(value):
 		if type(value) != type(0):
 			raise Exception('Invalid type')
 		if value in Memory.constants:
@@ -167,7 +167,7 @@ class Number( Expr ) :
 		self.value = v
 
 	def translate(self,mem):
-		self.handle=mem.getConstant(self.value)
+		self.handle=Memory.getConstant(self.value)
 		return ''
 		
 	def getHandle(self):
@@ -347,7 +347,7 @@ class FunCall( Expr ) :
 		s+='CAL '+mem.getFuncLabel(self.name)+';\n'
 		result=mem.getTemp()
 		s+='LDA '+Memory.sp+';\n'
-		s+='ADD '+mem.getConstant(1)+';\n'
+		s+='ADD '+Memory.getConstant(1)+';\n'
 		s+='STA '+result+';\n'
 		self.handle=result
 		s+='LDA '+Memory.sp+';\n'
@@ -624,10 +624,10 @@ class Program :
 
 	def translate(self) :
 		trans = self.stmtList.translate(self.mem)
-		three=self.mem.getConstant(3)
-		locs=self.mem.getConstant(self.mem.nCount)
-		temp=self.mem.getConstant(self.mem.tCount)
-		numC=self.mem.getConstant(self.mem.cCount+1)
+		three=Memory.getConstant(3)
+		locs=Memory.getConstant(self.mem.nCount)
+		temp=Memory.getConstant(self.mem.tCount)
+		numC=Memory.getConstant(self.mem.cCount+1)
 		s='LDA '+numC+';\n'
 		s+='ADD '+three+';\n'
 		s+='STA '+Memory.sp+';\n'
