@@ -55,10 +55,12 @@ def linker(ralToLink, memObj) :
 			instructions[i]=cmd[(cmd.index(':')+1):].lstrip()
 
 	linkedCode = '\n'.join(instructions)
+
 	# For all the locations, replace the various jump commands with line numbers
 	for locID, value in locations.items() : 
 		linkedCode = linkedCode.replace('JMN ' + locID, 'JMN ' + str(value))
 		linkedCode = linkedCode.replace('JMP ' + locID, 'JMP ' + str(value))
 		linkedCode = linkedCode.replace('JMZ ' + locID, 'JMZ ' + str(value))
+		linkedCode = linkedCode.replace('CAL ' + locID, 'CAL ' + str(value))
 
 	return linkedCode
