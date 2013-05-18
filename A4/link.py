@@ -31,13 +31,13 @@ def linker(ralToLink, memObj) :
 	for x in range(1, 5) : 
 		if "S" + str(x) in linkedCode : 
 			scratchCount += 1
-			linkedCode = linkedCode.replace("S" + str(x), str(x))
+			linkedCode = linkedCode.replace("S" + str(x), str(x + 2))
 	
 	fpCount = 0
 
 	if "FP" in linkedCode : 
 		fpCount += 1
-		linkedCode = linkedCode.replace("FP", str(scratchCount + 2 + memObj.cCount + spCount))
+		linkedCode = linkedCode.replace("FP", str(0))
 
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address
@@ -49,7 +49,7 @@ def linker(ralToLink, memObj) :
 	# Therefore, the address will be the number of constants added to the 
 	# variable index + 1 (per note above
 	for value, varID in memObj.nt.items() : 
-		currVar = int(varID.replace('V', '')) + 1 + memObj.cCount + spCount + scratchCount + fpCount + scratchCount + fpCount
+		currVar = int(varID.replace('V', '')) + 1 + memObj.cCount + spCount + scratchCount + fpCount
 		linkedCode = linkedCode.replace(varID, str(currVar))
 		
 	# Same concept as the previous for loop, but add in the variables too
