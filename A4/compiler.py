@@ -11,14 +11,16 @@ aparser = argparse.ArgumentParser(description='Compiler for Mini Language')
 #aparser.add_argument('-O', '--Optimize', const=True, default=False, nargs='?', help='optimize compiling with peephole, default=no')
 aparser.add_argument('-v', '--verbose', const=True, default=False, nargs='?', help='verbose, print all the information along')
 aparser.add_argument('-o', '--output', type=argparse.FileType('w'), default=sys.stdout, help='output file')
+aparser.add_argument('-m', '--memorySize', type=int, help='memorySize')
 aparser.add_argument('--trans', const=True, nargs='?', default=False, help='for display purpose only')
 aparser.add_argument('--link', const=True, nargs='?', default=False, help='for display purpose only')
+
 #aparser.add_argument('--op', const=True, nargs='?', default=False, help='for display purpose only')
 
 # compile method, which calls translate, optionally calls optimize, and then calls link
 # parameters: Program p, Boolean verbose mode, Boolean optimize mode
 # return the compiled program
-def compile(P, verbose=False, trans=False, link=False): #optimize=False, op=False
+def compile(P,memorySize, verbose=False, trans=False, link=False): #optimize=False, op=False
 
 	print 'Compiling Program..'
 	translate=P.translate()
@@ -36,7 +38,7 @@ def compile(P, verbose=False, trans=False, link=False): #optimize=False, op=Fals
 	#else:
 	#	peepholeCode = translate
 	print 'Linking Code..'
-	linked= linker.linker(translate, P.mem)
+	linked= linker.linker(translate, P.mem,memorySize)
 	if verbose or link:
 		print 'Linked code:'
 		print linked
@@ -56,7 +58,7 @@ s = ''
 for l in sys.stdin:
 	s+=l
 parsed = interpreter.parse(s)
-compiled = compile(parsed, a.verbose, a.trans, a.link) #a.Optimize,, a.op
+compiled = compile(parsed,a.memorySize, a.verbose, a.trans, a.link) #a.Optimize,, a.op
 if a.trans or a.link: #or a.op
 	exit()
 else:

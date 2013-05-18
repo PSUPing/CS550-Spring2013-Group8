@@ -1,7 +1,7 @@
 import programext
 memFile = "simulator/mem.txt"
 # link method that produces absolute (i.e. hard coded addresses) code, corresponding to the translated symbolic RAL code, that can be simulated on the RAM simulator
-def linker(ralToLink, memObj) :
+def linker(ralToLink, memObj,memorySize) :
 	linkedCode = ralToLink
 
 	f = open(memFile, "w+")
@@ -15,15 +15,23 @@ def linker(ralToLink, memObj) :
 	# add all the variables and temps, set up as 0
 	mem += [0 for i in range(memObj.tCount + memObj.cCount)]
 	#print to mem file
-	for i in range(len(mem)):
-		f.write(str(i+1) + " " + str(mem[i]) + " ;\n")
+	mem.insert(0,0)#insert fp,sp and scratch
+	mem.insert(0,0)
+	mem.insert(0,0)
+	mem.insert(0,0)
+	mem.insert(0,0)
+	mem.insert(0,0)
+	mem.insert(0,0)
+	for i in range(memorySize):
+		if i<len(mem):
+			f.write(str(i+1) + " " + str(mem[i]) + " ;\n")
+		else:
+			f.write(str(i+1) + " " + str(0) + " ;\n")
+			
 	f.close()
 
-	spCount = 0
-
 	if "SP" in linkedCode : 
-		spCount += 1
-		linkedCode = linkedCode.replace("SP", str(1))
+		linkedCode = linkedCode.replace("SP", str(2))
 
 	scratchCount = 0
 
@@ -33,29 +41,30 @@ def linker(ralToLink, memObj) :
 			scratchCount += 1
 			linkedCode = linkedCode.replace("S" + str(x), str(x + 2))
 	
-	fpCount = 0
-
 	if "FP" in linkedCode : 
-		fpCount += 1
-		linkedCode = linkedCode.replace("FP", str(0))
+		linkedCode = linkedCode.replace("FP", str(1))
 
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address
 	for value, consID in memObj.constants.items() : 
-		currCons = int(consID.replace('C', '')) + 1 + spCount + scratchCount + fpCount
+		currCons = int(consID.replace('C', '')) + 3 + scratchCount
 		linkedCode = linkedCode.replace(consID, str(currCons))
 
 	# Memory is organized in the order of constants, variables, then temps
 	# Therefore, the address will be the number of constants added to the 
 	# variable index + 1 (per note above
-	for value, varID in memObj.nt.items() : 
+
+	#Should never happen
+	'''for value, varID in memObj.nt.items() : 
 		currVar = int(varID.replace('V', '')) + 1 + memObj.cCount + spCount + scratchCount + fpCount
-		linkedCode = linkedCode.replace(varID, str(currVar))
+		linkedCode = linkedCode.replace(varID, str(currVar))'''
 		
 	# Same concept as the previous for loop, but add in the variables too
-	for temp in range(0, memObj.tCount) :
+
+	#should never happen
+	'''for temp in range(0, memObj.tCount) :
 		currTemp = temp + 1 + memObj.cCount + memObj.nCount + spCount + scratchCount + fpCount
-		linkedCode = linkedCode.replace('T' + str(temp), str(currTemp))
+		linkedCode = linkedCode.replace('T' + str(temp), str(currTemp))'''
 	
 	# Each line needs to be counted
 	instructions = linkedCode.split('\n')

@@ -1,15 +1,95 @@
-; Sample RAL program
-; if (a == b)
-;    c = 1;
-; else
-;    c = 0;
-   
-LDA 3; ac <- memory[3]
-SUB 4; AC <- AC - memory[4]
-JMZ 7; if (memory[3] == memory[4]) goto 7
-LDA 1; AC <- 0
-STA 5; memory[5] = 0
-HLT  ; halt
-LDA 2; AC <- 1
-STA 5; memory[5] = 1
-HLT  ; halt
+LDA 12;
+ADD 8;
+STA 2;
+ADD 11;
+ADD 8;
+STA 1;
+LDA 1;
+SUB 7;
+STA 3;
+LDI 3;
+LDA 1;
+SUB 7;
+STA 3;
+STI 3;
+LDA 2;
+STI 4;
+LDA 1;
+STA 2;
+ADD 10;
+ADD 9;
+ADD 10;
+ADD 7;
+STA 1;
+STI 3;
+LDA 1;
+SUB 7;
+STA 4;
+LDA 1;
+SUB 10;
+STA 3;
+LDI 4;
+STI 3;
+CAL 59;
+LDA 1;
+SUB 8;
+SUB 10;
+STA 3;
+LDA 2;
+ADD 9;
+STI 3;
+LDA 2;
+STA 1;
+LDA 1;
+SUB 8;
+SUB 9;
+STA 3;
+LDI 3;
+STA 2;
+LDA 1;
+SUB 8;
+SUB 10;
+STA 3;
+LDI 3;
+LDA 1;
+SUB 8;
+STA 3;
+STI 3;
+HLT ;
+LDA 1;
+SUB 9;
+SUB 7;
+STA 3;
+LDA 1;
+SUB 7;
+STA 4;
+LDA 1;
+SUB 10;
+STA 5;
+LDI 4;
+SUB 5;
+STI 3;
+LDA 1;
+SUB 9;
+SUB 7;
+STA 3;
+LDI 3;
+LDA 1;
+SUB 9;
+STA 3;
+STI 3;
+LDA 2;
+ADD 10;
+STA 3;
+LDA 1;
+SUB 9;
+STA 4;
+LDA 4;
+STI 3;
+LDA 2;
+ADD 9;
+LDA 1;
+SUB 9;
+STA 3;
+STA 3;
+JMI 3;

@@ -97,7 +97,7 @@ class Memory:
 			index=int(temp[1:])
 			s='LDA '+Memory.fp+';\n'
 			s+='SUB '+Memory.getConstant(self.nCount)+';\n'
-			s+='SUB '+Memory.getConstant(index-1)+';\n'
+			s+='SUB '+Memory.getConstant(index)+';\n'
 			s+='STA '+scratch+';\n'
 			return s
 		else:
@@ -106,7 +106,7 @@ class Memory:
 	def transVar(self,var,scratch):
 		index=int(var[1:])
 		s='LDA '+Memory.fp+';\n'
-		s+='SUB '+Memory.getConstant(index-1)+';\n'
+		s+='SUB '+Memory.getConstant(index)+';\n'
 		s+='STA '+scratch+';\n'
 		return s
 
