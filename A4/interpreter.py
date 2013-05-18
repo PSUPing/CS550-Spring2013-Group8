@@ -72,14 +72,14 @@ reserved = {
 # the t_ prefix).  They simply return the type.
 
 	# t_ignore is special, and does just what it says.  Spaces and tabs
-t_ignore = ' t'
+t_ignore = ' \t\n'
 
-	# These are the simple maps
-t_PLUS		= r'+'
+# These are the simple maps
+t_PLUS		= r'\+'
 t_MINUS   	= r'-'
-t_TIMES		= r'*'
-t_LPAREN	= r'('
-t_RPAREN	= r')'
+t_TIMES		= r'\*'
+t_LPAREN	= r'\('
+t_RPAREN	= r'\)'
 t_ASSIGNOP 	= r':='
 t_SEMICOLON = r';'
 t_COMMA		= r','
@@ -122,16 +122,7 @@ import ply.yacc as yacc
 
 def p_program( p ) :
 	'program : stmt_list'
-	P = Program( p[1] )
-	#P.display()
-	print 'Compiling Program'
-	translate=P.translate()
-	print translate+'n'
-	#print 'Providing Peephole Optimization'
-	#peepholeCode = peephole.peephole(translate) + "n"
-	#print(peepholeCode)
-	print 'Linking Code'
-	print(link.linker(translate, P.mem))
+	p[0] = Program( p[1] )
 	
 def p_stmt_list( p ) :
 	'''stmt_list : stmt SEMICOLON stmt_list
@@ -235,7 +226,11 @@ def compile(stringToCompile) :
 	yacc.yacc()
 	yacc.parse(stringToCompile)
 
-string1 = "i := 5; define testfunc proc (n) return := n - 3 end; q := testfunc(i)"
+def parse(stringToParse) :
+	yacc.yacc()
+	return yacc.parse(stringToParse)
+
+#string1 = "i := 5; define testfunc proc (n) return := n - 3 end; q := testfunc(i)"
 #string1 = "i := 5; n := i * 3"
 
-compile(string1)
+#compile(string1)

@@ -63,7 +63,6 @@ class Memory:
 	pCount=0
 	ft={}
 	ftLabels={}
-	parList={}
 	fp='FP'
 	sp='SP'
 	scratch='S1'
@@ -76,11 +75,6 @@ class Memory:
 		self.tCount=0
 		self.nCount=0
 		self.nt={}
-
-	@staticmethod
-	def addParList(name,argList) : 
-		Memory.pCount+=len(argList)
-		Memory.parList[name]=argList
 
 	def getLabel(self):
 		Memory.lCount+=1
@@ -360,7 +354,6 @@ class FunCall( Expr ) :
 		return ft[ self.name ].apply( nt, ft, self.argList )
 
 	def translate( self,mem ) :
-		Memory.addParList(self.name,self.argList)
 		func=Memory.ft[self.name]
 		nP=Memory.getConstant(func.pCount)
 		nV=Memory.getConstant(func.nCount)
@@ -383,10 +376,9 @@ class FunCall( Expr ) :
 		s+= 'STA '+Memory.fp+';\n'
 		s+= 'STI '+Memory.scratch+';\n'
 		for i in range(len(self.argList)):
-			self.argList[i].translate(mem)	
+			self.argList[i].translate(mem)
 			handle=self.argList[i].getHandle()
-			tempParList=Memory.parList[self.name]
-			par=tempParList[i].getHandle()
+			par=mem.getVariable(handle)
 			#par=Memory.ft[self.name].parList[i]
 			dest=mem.getVariable(par)
 			s+=mem.transTemp(handle,Memory.scratch2)	

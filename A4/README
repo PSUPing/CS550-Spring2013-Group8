@@ -1,0 +1,4 @@
+Group 8
+Assignment 4 - Mini Language Compiler V2
+
+This program uses the same files as the original Mini Compiler Assignment.  However, the programext.py and link.py are modified to support compiling instructions for functions.  The RAL instructions are created in the Proc and FunCall classes.  The Memory class has also been modified to support storing scratch space, a stack pointer and a frame pointer.  Finally, each of the translate methods have been modified to pass the Memory object through them.  This allows a function to mimic a Memory space for itself, thus providing an activation record.  
