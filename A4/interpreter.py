@@ -72,14 +72,14 @@ reserved = {
 # the t_ prefix).  They simply return the type.
 
 	# t_ignore is special, and does just what it says.  Spaces and tabs
-t_ignore = ' \t'
+t_ignore = ' t'
 
 	# These are the simple maps
-t_PLUS		= r'\+'
+t_PLUS		= r'+'
 t_MINUS   	= r'-'
-t_TIMES		= r'\*'
-t_LPAREN	= r'\('
-t_RPAREN	= r'\)'
+t_TIMES		= r'*'
+t_LPAREN	= r'('
+t_RPAREN	= r')'
 t_ASSIGNOP 	= r':='
 t_SEMICOLON = r';'
 t_COMMA		= r','
@@ -99,7 +99,7 @@ def t_NUMBER( t ) :
 
 	# These are standard little ditties:
 def t_newline( t ):
-  r'\n+'
+  r'n+'
   t.lexer.lineno += len( t.value )
 
   # Error handling rule
@@ -126,9 +126,9 @@ def p_program( p ) :
 	#P.display()
 	print 'Compiling Program'
 	translate=P.translate()
-	print translate+'\n'
+	print translate+'n'
 	#print 'Providing Peephole Optimization'
-	#peepholeCode = peephole.peephole(translate) + "\n"
+	#peepholeCode = peephole.peephole(translate) + "n"
 	#print(peepholeCode)
 	print 'Linking Code'
 	print(link.linker(translate, P.mem))
