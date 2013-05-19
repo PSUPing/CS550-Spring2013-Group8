@@ -10,7 +10,7 @@ view: compiler.py link.py interpreter.py programext.py
 compile: compiler.py link.py interpreter.py programext.py
 	python compiler.py -v -o simulator/prog.txt -m $$RAM_MEM
 view-trans: compiler.py link.py interpreter.py programext.py 
-	python compiler.py --trans
+	python compiler.py --trans -m $$RAM_MEM
 view-link: compiler.py link.py interpreter.py programext.py
 	python compiler.py --link -m $$RAM_MEM
 run: compiler.py link.py interpreter.py programext.py	

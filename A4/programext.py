@@ -60,11 +60,10 @@ class Memory:
 	constants={}
 	cCount=0
 	lCount=0
-	pCount=0
-	ft={}
-	fmemt={}
+	ft={}#function table
+	fmemt={}#this stores a list of all the memory objects for each function
 	ftLabels={}
-	fp='FP'
+	fp='FP'#place holders to be replaced in the linker step
 	sp='SP'
 	scratch='S1'
 	scratch2='S2'
@@ -93,6 +92,9 @@ class Memory:
 		self.tCount+=1
 		return 'T'+str(self.tCount-1)
 
+#takes a temp and places its location in the specified scratch location
+#helps abstracts out getting local temps etc. Also gets variables
+#and constants
 	def transTemp(self,temp,scratch):
 		if temp[0]=='T':
 			index=int(temp[1:])
@@ -111,6 +113,7 @@ class Memory:
 		else:
 			print 'error'
 
+#same as above for variables
 	def transVar(self,var,scratch):
 		index=int(var[1:])
 		s='LDA '+Memory.fp+';\n'
@@ -370,6 +373,9 @@ class FunCall( Expr ) :
 	def eval( self, nt, ft ) :
 		return ft[ self.name ].apply( nt, ft, self.argList )
 
+#this function predicts where the next activation frame will be and loads
+# the parameters then it shifts the activation frame calls the function
+# and then shifts it back while extracting the return value
 	def translate( self,mem ) :
 		s=''
 		func=Memory.fmemt[self.name]
@@ -528,6 +534,8 @@ class DefineStmt( Stmt ) :
 	def eval( self, nt, ft ) :
 		ft[ self.name ] = self.proc
 
+#stmt translate functions return a tuple of current code and code to be
+#inserted at the end
 	def translate( self,mem ) : 
 		Memory.ft[ self.name ] = self.proc
 		mem2=Memory()
