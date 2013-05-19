@@ -188,6 +188,7 @@ void RAM::execute()
 	pc = 1 ;
 
 	while (!halted) {
+		cout<<pc<<+"\n";
 		op = program[pc].opcode;
 		switch (op) {
 		case LDA:

@@ -31,18 +31,17 @@ def linker(ralToLink, memObj,memorySize) :
 	f.close()
 
 	if "SP" in linkedCode : 
-		linkedCode = linkedCode.replace("SP", str(2))
+		linkedCode = linkedCode.replace("SP", str(1))
 
-	scratchCount = 0
+	scratchCount = 5
 
 	# We only have 5 scratch variables at most
 	for x in range(1, 5) : 
 		if "S" + str(x) in linkedCode : 
-			scratchCount += 1
 			linkedCode = linkedCode.replace("S" + str(x), str(x + 2))
 	
 	if "FP" in linkedCode : 
-		linkedCode = linkedCode.replace("FP", str(1))
+		linkedCode = linkedCode.replace("FP", str(2))
 
 	# Constants, variables and temps all use a 0 based index and
 	# therefore will need 1 added to the index to enter the correct address

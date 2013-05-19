@@ -57,6 +57,7 @@ int main( int argc, char** argv )
 
 	cout << endl << "Final Memory Configuration" << endl;
 	M.dump();
+	cout <<"done\n";
 }
 
 void usage( char *progname ) {
