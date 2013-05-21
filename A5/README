@@ -1,0 +1,4 @@
+Group 8
+Assignment 5 - Scheme Interpreter
+
+A5boolexp.scm - Parts 1 & 2.  Includes variables that contain tests for basic truth statements, and, or, not, implies and equiv functionality.  Also contains 3 tautologies to prove that the logic works
