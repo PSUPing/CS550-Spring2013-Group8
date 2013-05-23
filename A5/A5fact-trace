@@ -1,0 +1,385 @@
+;;; M-Eval input:
+(define (fact n) (if (= n 0) 1 (* n (fact (- n 1))))) (fact 3)
+[Entering #[compound-procedure 11 eval]
+    Args: (define (fact n) (if (= n 0) 1 (* n (fact (- n 1)))))
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[Entering #[compound-procedure 11 eval]
+    Args: (lambda (n) (if (= n 0) 1 (* n (fact (- n 1)))))
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[(procedure (n) ((if (= n 0) 1 (* n (fact (- n 1))))) (((fact false true ca...
+      <== #[compound-procedure 11 eval]
+    Args: (lambda (n) (if (= n 0) 1 (* n (fact (- n 1)))))
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[ok
+      <== #[compound-procedure 11 eval]
+    Args: (define (fact n) (if (= n 0) 1 (* n (fact (- n 1)))))
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+
+;;; M-Eval value:
+ok
+
+;;; M-Eval input:
+[Entering #[compound-procedure 11 eval]
+    Args: (fact 3)
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[Entering #[compound-procedure 11 eval]
+    Args: 3
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[3
+      <== #[compound-procedure 11 eval]
+    Args: 3
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[Entering #[compound-procedure 11 eval]
+    Args: fact
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[(procedure (n) ((if (= n 0) 1 (* n (fact (- n 1))))) (((fact false true ca...
+      <== #[compound-procedure 11 eval]
+    Args: fact
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+[Entering #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[3
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+
+[Entering #[compound-procedure 11 eval]
+    Args: =
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 12])
+      <== #[compound-procedure 11 eval]
+    Args: =
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[#f
+      <== #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[3
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: -
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 13])
+      <== #[compound-procedure 11 eval]
+    Args: -
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(procedure (n) ((if (= n 0) 1 (* n (fact (- n 1))))) (((fact false true ca...
+      <== #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: =
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 12])
+      <== #[compound-procedure 11 eval]
+    Args: =
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[#f
+      <== #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: -
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 13])
+      <== #[compound-procedure 11 eval]
+    Args: -
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(procedure (n) ((if (= n 0) 1 (* n (fact (- n 1))))) (((fact false true ca...
+      <== #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: =
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 12])
+      <== #[compound-procedure 11 eval]
+    Args: =
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[#f
+      <== #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: -
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 13])
+      <== #[compound-procedure 11 eval]
+    Args: -
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: (- n 1)
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(procedure (n) ((if (= n 0) 1 (* n (fact (- n 1))))) (((fact false true ca...
+      <== #[compound-procedure 11 eval]
+    Args: fact
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: 0
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[0
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: =
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 12])
+      <== #[compound-procedure 11 eval]
+    Args: =
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[#t
+      <== #[compound-procedure 11 eval]
+    Args: (= n 0)
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: 1
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 0) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: *
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 14])
+      <== #[compound-procedure 11 eval]
+    Args: *
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 1) ((fact false true car cdr cons null? - * =) (procedure (...]
+[1
+      <== #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: *
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 14])
+      <== #[compound-procedure 11 eval]
+    Args: *
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 2) ((fact false true car cdr cons null? - * =) (procedure (...]
+[2
+      <== #[compound-procedure 11 eval]
+    Args: (fact (- n 1))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[3
+      <== #[compound-procedure 11 eval]
+    Args: n
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[Entering #[compound-procedure 11 eval]
+    Args: *
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[(primitive #[arity-dispatched-procedure 14])
+      <== #[compound-procedure 11 eval]
+    Args: *
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[6
+      <== #[compound-procedure 11 eval]
+    Args: (* n (fact (- n 1)))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[6
+      <== #[compound-procedure 11 eval]
+    Args: (if (= n 0) 1 (* n (fact (- n 1))))
+          (((n) 3) ((fact false true car cdr cons null? - * =) (procedure (...]
+[6
+      <== #[compound-procedure 11 eval]
+    Args: (fact 3)
+          (((fact false true car cdr cons null? - * =) (procedure (n) ((if ...]
+
+;;; M-Eval value:
+6
+
+;;; M-Eval input:
+       
