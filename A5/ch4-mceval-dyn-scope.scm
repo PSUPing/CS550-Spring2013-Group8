@@ -25,18 +25,18 @@
         ((if? exp) (eval-if exp env))
         ((lambda? exp)
          (make-procedure (lambda-parameters exp)
-                         (lambda-body exp)
-                         env))
+                         (lambda-body exp)))
         ((begin? exp) 
          (eval-sequence (begin-actions exp) env))
         ((cond? exp) (eval (cond->if exp) env))
         ((application? exp)
          (apply (eval (operator exp) env)
-                (list-of-values (operands exp) env)))
+                (list-of-values (operands exp) env)
+                env))
         (else
          (error "Unknown expression type -- EVAL" exp))))
 
-(define (apply procedure arguments)
+(define (apply procedure arguments env)
   (cond ((primitive-procedure? procedure)
          (apply-primitive-procedure procedure arguments))
         ((compound-procedure? procedure)
@@ -45,7 +45,7 @@
            (extend-environment
              (procedure-parameters procedure)
              arguments
-             (procedure-environment procedure))))
+             env)))
         (else
          (error
           "Unknown procedure type -- APPLY" procedure))))
@@ -206,8 +206,8 @@
   (eq? x false))
 
 
-(define (make-procedure parameters body env)
-  (list 'procedure parameters body env))
+(define (make-procedure parameters body)
+  (list 'procedure parameters body))
 
 (define (compound-procedure? p)
   (tagged-list? p 'procedure))
@@ -358,3 +358,5 @@
 ;;(driver-loop)
 
 'METACIRCULAR-EVALUATOR-LOADED
+
+(define (fact n) (if (= n 0) 1 (* n (fact (- n 1))))) (fact 3)
