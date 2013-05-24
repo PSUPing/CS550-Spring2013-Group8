@@ -1,0 +1,9 @@
+The code will use the eval method to determine what type of statement is to be evaluated first.  Once this determination is made, the correct specialized evaluation method would be called.  For instance, in the program: 
+
+(define (fact n)
+	(if (= n 0) 1 (* n (fact (- n 1)))))
+(fact 3)
+
+The "define" statement will indicate that the following code should be considered a procedure.  It will pull the name "fact" and the arguments "n" and the statements that follow.  The statements will be evaluated by the statment-list evaluator.  Again, the eval method will be called, causing the if statement to be evaluated.  It will handle the test expression, consequent and alternative aspects of the if statement.  In this case the alternative aspect of the if statement contains a call to the function itself.  Since this is a function, it will evaluate the parameters and call the function.  This will occur until the consequent is exeucted because if is considered "self-evaluating" by the interpreter.  
+
+The last statement is simply a call to the "fact" method as explained in the paragraph above with the value of 3.
