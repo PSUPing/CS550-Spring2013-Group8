@@ -77,9 +77,9 @@ def linker(ralToLink, memObj,memorySize) :
 	for i in range(len(instructions)) :
 		cmd = instructions[i]
 		lineNum += 1;
-		if 'L' + str(tempLoc) + ':' in cmd : 
-			locations['L' + str(tempLoc)] = lineNum
-			tempLoc += 1
+		if instructions[i].find(':') > -1 : 
+			tempLoc = instructions[i][1:instructions[i].find(':')]
+			locations[str('L' + tempLoc)] = lineNum
 			instructions[i]=cmd[(cmd.index(':')+1):].lstrip()
 
 	linkedCode = '\n'.join(instructions)
