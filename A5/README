@@ -1,4 +1,16 @@
 Group 8
 Assignment 5 - Scheme Interpreter
 
-A5boolexp.scm - Parts 1 & 2.  Includes variables that contain tests for basic truth statements, and, or, not, implies and equiv functionality.  Also contains 3 tautologies to prove that the logic works
+Part 2:
+to run part to execute the command (load "A5boolexp") followed by the
+tautology command which takes the form of (taut? '(equiv a b)) or possibly
+of the form (taut? '(a (or (not a)))). It returns true if the statement is
+true for all choice of variables and is false otherwise. The program first
+extracts all variables by iterating through all of the elements of the list
+and adding them if they are not any of the boolean functions, #t, #f, or if
+the word has already been added. It stores them in a list of pairs and when
+a value is added it is initialized to #f Then it tests every combination of #t and #f by treating it like a boolean number and constantly adding one until
+all of the number are already one then you are done. (each variable
+represents a boolean digit). Then the variables are replaced and evaluated
+for their given values. If it is true it moves on, otherwise it returns
+true. If it makes it to the end, then it returns true.
