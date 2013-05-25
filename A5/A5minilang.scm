@@ -1,7 +1,7 @@
 ;;;; Main Program Functions
  
 (define (eval prog env)
-	(begin (eval-stmt-list expr env)
+	(begin (eval-stmt-list prog env)
 		   (display env)))
  
 ;;;; Statement Functions

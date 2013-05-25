@@ -39,32 +39,27 @@
          ((and (eq? (boolexp expr1) #f) (eq? (boolexp expr2) #f)) #t)
          (else "Symbol Error")))
  
-;(define P #t)
+(define P #t)
  
-;(define Q #f)
+(define Q #f)
  
-;(define negativeTest 348284)
+(define (negativeTest)(boolexp 348284))
  
-;(define simpleTest (list 'boolexp P))
+(define (simpleTest) (boolexp (list 'boolexp P)))
  
-;(define andTest (list 'and P Q))
+(define (andTest) (boolexp (list 'and P Q)))
  
-;(define orTest (list 'or P Q))
+(define (orTest) (boolexp (list 'or P Q)))
  
-;(define notTest (list 'not P))
+(define (notTest) (boolexp (list 'not P)))
  
-;(define simpleTest (list 'not P))
+(define (simpleTest2) (boolexp (list 'not P)))
  
-;(define impliesTest (list 'implies P Q))
+(define (impliesTest) (boolexp (list 'implies P Q)))
  
-;(define equivTest (list 'equiv Q Q))
- 
-;(define taut1 (list 'or P (list 'not P)))
- 
-;(define taut2 (list 'equiv (list 'or P Q) (list 'or Q P)))
- 
-;(define taut3 (list 'equiv (list 'or P Q) (list 'or P (list 'and (list 'not P) Q))))
+(define (equivTest) (boolexp (list 'equiv Q Q)))
 
+ 
 ;Returns a list of pairs consisting of variable and #f
 ;one entry for each variable in the statement
 (define (extractVars l)
@@ -207,3 +202,12 @@
 (define (taut? expr)
 	(check expr (extractVars expr))
 )
+
+(define (taut1) (taut? '(or A (not A))))
+
+(define (taut2) (taut? '(equiv (or A B) (or B A))))
+
+(define (taut3) (taut? '(equiv (or A B) (or A (and (not A) B)))))
+
+(define (nottaut) (taut? '(equiv A B)))
+
