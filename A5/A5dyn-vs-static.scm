@@ -1,5 +1,5 @@
-(set! q 5)
+(define q 5)
 (define (sub2)
-	(set! q (- q 2)))
-(set! q 3)
+	(- q 2))
+(define q 3)
 (sub2)
