@@ -40,7 +40,10 @@ the interpreter interprets the code.
 Part 4: ch4-mceval-dyn-scope.scm contains a version of the interpreter with
 static instead of dynamic scoping. A5dyn-vs-static.scm contains a program
 that will have different results depending on whether the program is run
-with static or dynamic scoping.
+with static or dynamic scoping. To run the program execute the command (load
+"ch4-mceval-dyn-scope") and then (define the-global-environment
+(setup-environment)). Then you can execute the commands in the
+A5dyn-vs-static file to demonstrate that it truly has dynamci scoping now.
 
 Part 5: A5minilang.scm contains the methods for the mini language defined in
 part 5. There are some sample test cases in the file. Variable assignment is 
