@@ -332,9 +332,10 @@ class Proc(Expr) :
 		self.body.display( nt, depth+1 )
 
 class Property(Expr):
-	def __init__(self, objName, propName):
-		self.objName=objName
-		self.propName=propName
+	def __init__(self, string):
+		string=string.split(',')
+		self.objName=string[0]
+		self.propName=string[1]
 	
 	def eval(self,nt):
 		return nt.get(self.objName).getSub(self.propName,nt)
@@ -519,28 +520,27 @@ class Environment :
 		if copy==None:
 			self.env=[{}]
 		else:
-			self.env=copy.env[:]
+			self.env=[{},copy]
 	
 	def get(self,ident):
-		for i in range(len(self.env)):
-			try:
-				store=self.env[i][ident]
-				return store;
-			except:
-				pass
-		raise LookupError("Identifier not in the environment")
+		try:
+			store=self.env[0][ident]
+			return store;
+		except:
+			pass
+		try:
+			store=self.env[1].get(ident)
+		except:
+			raise LookupError("Identifier not in the environment")
 
 	def set(self,ident,value):
 		self.env[0][ident]=value
 
-	def addFrame(self,frame=None):
-		if frame is None:
-			self.env.insert(0,{})
-		else:
-			self.env.insert(0,frame)
-	
 	def __str__(self):
 		s=''
-		for i in range(len(self.env)):
-			s+=str(self.env[i])
+		s+=str(self.env[0])
+		try:
+			s+=str(self.env[1])
+		except:
+			pass
 		return s

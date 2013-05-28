@@ -55,7 +55,7 @@ tokens = (
 		'CONCAT',
 		'CLASSSYM',
 		'SUPER',
-		'CLASSPROP'
+		'PROP'
 		)
 
 # These are all caught in the IDENT rule, typed there.
@@ -90,10 +90,14 @@ t_ASSIGNOP      = r':='
 t_SEMICOLON     = r';'
 t_SUPER					= r':'
 t_COMMA         = r','
-t_CLASSPROP			= r'\.'
+
+def t_PROP(t):
+	r'[a-zA-Z_][a-zA-Z_0-9]*\.[a-zA-Z_][a-zA-Z_0-9]*'
+	return t
 
 def t_IDENT( t ):
 	r'[a-zA-Z_][a-zA-Z_0-9]*'
+	print t
 	t.type = reserved.get( t.value, 'IDENT' )    # Check for reserved words
 	return t
 
@@ -239,15 +243,10 @@ def p_class(p):
 		| CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
 		| CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END 
 		| CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END'''
-
 	if len(p)==8:
 		p[0] = Class( p[2],p[4],p[6] )
 	else:
 		p[0] = Class( p[2],p[4],p[6],p[9] )
-
-def p_property(p):
-	'''property : IDENT CLASSPROP IDENT'''
-	p[0] = Property(p[1],p[3])
 
 
 def p_param_list( p ) :
@@ -258,6 +257,10 @@ def p_param_list( p ) :
 	else :  # we have a param_list, keep adding to front
 		p[3].insert( 0, p[1] )
 		p[0] = p[3]
+
+def p_property(p):
+	'''property : PROP'''
+	p[0] = Property(p[1])
 
 def p_list(p):
 	'''list : LBRACKET sequence RBRACKET
