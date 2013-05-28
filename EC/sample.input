@@ -1,0 +1,13 @@
+class test(num)
+L := num;
+add := proc(x) return := cons(x,L) end;
+Car :=proc() return := car(L) end;
+Cdr :=proc() return := cdr(L) end
+end;
+
+L:=test([]);
+L.Cons(3);
+L.Cons(2);
+L.Cons(1);
+x:=L.Car();
+M:=L.Cdr()

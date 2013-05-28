@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 #
 # exp.py - Classes to represent underlying data structures for the grammar
 #        below, for the mini-compiler.
@@ -295,6 +295,7 @@ class Proc(Expr) :
 
 	def eval( self ,nt):
 		newEnv = Environment(nt)
+		newEnv.addFrame()
 		self.env=newEnv
 		return self
 	
@@ -330,6 +331,68 @@ class Proc(Expr) :
 		print "%sPROC %s :" % (tabstop*depth, str(self.parList))
 		self.body.display( nt, depth+1 )
 
+class Property(Expr):
+	def __init__(self, objName, propName):
+		self.objName=objName
+		self.propName=propName
+	
+	def eval(self,nt):
+		return nt.get(self.objName).getSub(self.propName,nt)
+
+	def display(self, nt, depth=0):
+		print "%sProperty %s :" % (tabstop*depth, str(self.objName)+"."+str(self.proName))
+
+class Class() :
+	def __init__( self,name, paramList, body,superClassName=None ) :
+		self.name=name
+		self.parList = paramList
+		self.body = body
+		self.superClassName=superClassName
+
+	def eval( self ,nt):
+		nt.set(self.name, self)
+		newEnv = Environment(nt)
+		newEnv.addFrame()
+		self.env=newEnv
+	
+	def apply( self, nt, args) :
+				# sanity check, # of args
+		if len( args ) is not len( self.parList ) :
+			print "Param count does not match:"
+			sys.exit( 1 )
+	
+		if self.superClassName is not None:
+			self.superClass=nt.get(self.superClassName).apply(nt,args)
+		else:
+			self.superClass=None
+		
+		# bind parameters in new name table (the only things there right now)
+		for i in range( len( args )) :
+			self.env.set(self.parList[i], args[i].eval( nt))
+		
+		# KS Don't know what I was doin' here, but it's wrong 3/08
+		# Thank you, Charles
+		#[ newContext.__setitem__(p,a.eval( nt, ft ))
+		#		for p in self.parList for a in args ]
+		
+		# evaluate the function body using the new name table and the old (only)
+		# function table.  Note that the proc's return value is stored as
+		# 'return in its nametable
+		
+		self.body.eval( self.env )
+		return self
+	
+	def getSub(self,sub, nt):
+		if self.env.env[0].contains(sub):
+			return self.env.get(sub)
+		elif self.superClass is not None and self.superClass.env.env[0].contains(sub):
+			return self.superClass.env.get(sub)
+		else:
+			raise LookupError("Class does not have the given property or method")
+
+	def display( self, nt,depth=0 ) :
+		print "%sPROC %s :" % (tabstop*depth, str(self.parList))
+		self.body.display( nt, depth+1 )
 
 #-------------------------------------------------------
 
@@ -456,28 +519,28 @@ class Environment :
 		if copy==None:
 			self.env=[{}]
 		else:
-			self.env=[{},copy]
+			self.env=copy.env[:]
 	
 	def get(self,ident):
-		try:
-			store=self.env[0][ident]
-			return store;
-		except:
-			pass
-		try:
-			store=self.env[1].get(ident)
-			return store;
-		except:
-			raise LookupError("Identifier not in the environment")
+		for i in range(len(self.env)):
+			try:
+				store=self.env[i][ident]
+				return store;
+			except:
+				pass
+		raise LookupError("Identifier not in the environment")
 
 	def set(self,ident,value):
 		self.env[0][ident]=value
 
+	def addFrame(self,frame=None):
+		if frame is None:
+			self.env.insert(0,{})
+		else:
+			self.env.insert(0,frame)
+	
 	def __str__(self):
 		s=''
-		s+=str(self.env[0])
-		try:
-			s+=str(self.env[1])
-		except:
-			pass
+		for i in range(len(self.env)):
+			s+=str(self.env[i])
 		return s

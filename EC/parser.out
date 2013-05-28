@@ -1,0 +1,1689 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> stmt_list
+Rule 2     stmt_list -> stmt SEMICOLON stmt_list
+Rule 3     stmt_list -> stmt
+Rule 4     stmt -> assign_stmt
+Rule 5     stmt -> while_stmt
+Rule 6     stmt -> if_stmt
+Rule 7     stmt -> class_stmt
+Rule 8     expr -> expr PLUS term
+Rule 9     expr -> expr MINUS term
+Rule 10    expr_list -> expr COMMA expr_list
+Rule 11    expr_list -> expr
+Rule 12    expr -> term
+Rule 13    term -> term TIMES fact
+Rule 14    term -> term CONCAT fact
+Rule 15    term -> fact
+Rule 16    fact -> LPAREN expr RPAREN
+Rule 17    fact -> NUMBER
+Rule 18    fact -> IDENT
+Rule 19    fact -> list
+Rule 20    fact -> func_call
+Rule 21    fact -> proc
+Rule 22    assign_stmt -> IDENT ASSIGNOP expr
+Rule 23    fact -> property
+Rule 24    while_stmt -> WHILE expr DO stmt_list OD
+Rule 25    if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI
+Rule 26    proc -> PROC LPAREN param_list RPAREN stmt_list END
+Rule 27    proc -> PROC LPAREN RPAREN stmt_list END
+Rule 28    class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+Rule 29    class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+Rule 30    class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+Rule 31    class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+Rule 32    property -> IDENT CLASSPROP IDENT
+Rule 33    param_list -> IDENT COMMA param_list
+Rule 34    param_list -> IDENT
+Rule 35    list -> LBRACKET sequence RBRACKET
+Rule 36    list -> LBRACKET RBRACKET
+Rule 37    sequence -> listelement COMMA sequence
+Rule 38    sequence -> listelement
+Rule 39    listelement -> list
+Rule 40    listelement -> NUMBER
+Rule 41    func_call -> IDENT LPAREN expr_list RPAREN
+
+Terminals, with rules where they appear
+
+ASSIGNOP             : 22
+CLASSPROP            : 32
+CLASSSYM             : 28 29 30 31
+COMMA                : 10 33 37
+CONCAT               : 14
+DO                   : 24
+ELSE                 : 25
+END                  : 26 27 28 29 30 30 31 31
+FI                   : 25
+IDENT                : 18 22 28 29 29 30 31 31 32 32 33 34 41
+IF                   : 25
+LBRACKET             : 35 36
+LPAREN               : 16 26 27 28 29 30 31 41
+MINUS                : 9
+NUMBER               : 17 40
+OD                   : 24
+PLUS                 : 8
+PROC                 : 26 27
+RBRACKET             : 35 36
+RPAREN               : 16 26 27 28 29 30 31 41
+SEMICOLON            : 2 30 31
+SUPER                : 29 31
+THEN                 : 25
+TIMES                : 13
+WHILE                : 24
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign_stmt          : 4
+class_stmt           : 7
+expr                 : 8 9 10 11 16 22 24 25
+expr_list            : 10 41
+fact                 : 13 14 15
+func_call            : 20
+if_stmt              : 6
+list                 : 19 39
+listelement          : 37 38
+param_list           : 26 28 29 33
+proc                 : 21
+program              : 0
+property             : 23
+sequence             : 35 37
+stmt                 : 2 3
+stmt_list            : 1 2 24 25 25 26 27 28 29 30 31
+term                 : 8 9 12 13 14
+while_stmt           : 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . stmt_list
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 7
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    program                        shift and go to state 3
+    class_stmt                     shift and go to state 10
+
+state 1
+
+    (24) while_stmt -> WHILE . expr DO stmt_list OD
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr                           shift and go to state 19
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 2
+
+    (4) stmt -> assign_stmt .
+
+    SEMICOLON       reduce using rule 4 (stmt -> assign_stmt .)
+    $end            reduce using rule 4 (stmt -> assign_stmt .)
+    OD              reduce using rule 4 (stmt -> assign_stmt .)
+    ELSE            reduce using rule 4 (stmt -> assign_stmt .)
+    END             reduce using rule 4 (stmt -> assign_stmt .)
+    FI              reduce using rule 4 (stmt -> assign_stmt .)
+
+
+state 3
+
+    (0) S' -> program .
+
+
+
+state 4
+
+    (22) assign_stmt -> IDENT . ASSIGNOP expr
+
+    ASSIGNOP        shift and go to state 24
+
+
+state 5
+
+    (2) stmt_list -> stmt . SEMICOLON stmt_list
+    (3) stmt_list -> stmt .
+
+    SEMICOLON       shift and go to state 25
+    ELSE            reduce using rule 3 (stmt_list -> stmt .)
+    $end            reduce using rule 3 (stmt_list -> stmt .)
+    END             reduce using rule 3 (stmt_list -> stmt .)
+    OD              reduce using rule 3 (stmt_list -> stmt .)
+    FI              reduce using rule 3 (stmt_list -> stmt .)
+
+
+state 6
+
+    (25) if_stmt -> IF . expr THEN stmt_list ELSE stmt_list FI
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr                           shift and go to state 26
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 7
+
+    (1) program -> stmt_list .
+
+    $end            reduce using rule 1 (program -> stmt_list .)
+
+
+state 8
+
+    (6) stmt -> if_stmt .
+
+    SEMICOLON       reduce using rule 6 (stmt -> if_stmt .)
+    $end            reduce using rule 6 (stmt -> if_stmt .)
+    OD              reduce using rule 6 (stmt -> if_stmt .)
+    ELSE            reduce using rule 6 (stmt -> if_stmt .)
+    END             reduce using rule 6 (stmt -> if_stmt .)
+    FI              reduce using rule 6 (stmt -> if_stmt .)
+
+
+state 9
+
+    (5) stmt -> while_stmt .
+
+    SEMICOLON       reduce using rule 5 (stmt -> while_stmt .)
+    $end            reduce using rule 5 (stmt -> while_stmt .)
+    OD              reduce using rule 5 (stmt -> while_stmt .)
+    ELSE            reduce using rule 5 (stmt -> while_stmt .)
+    END             reduce using rule 5 (stmt -> while_stmt .)
+    FI              reduce using rule 5 (stmt -> while_stmt .)
+
+
+state 10
+
+    (7) stmt -> class_stmt .
+
+    SEMICOLON       reduce using rule 7 (stmt -> class_stmt .)
+    $end            reduce using rule 7 (stmt -> class_stmt .)
+    OD              reduce using rule 7 (stmt -> class_stmt .)
+    ELSE            reduce using rule 7 (stmt -> class_stmt .)
+    END             reduce using rule 7 (stmt -> class_stmt .)
+    FI              reduce using rule 7 (stmt -> class_stmt .)
+
+
+state 11
+
+    (28) class_stmt -> CLASSSYM . IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> CLASSSYM . IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> CLASSSYM . IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> CLASSSYM . IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 27
+
+
+state 12
+
+    (17) fact -> NUMBER .
+
+    TIMES           reduce using rule 17 (fact -> NUMBER .)
+    CONCAT          reduce using rule 17 (fact -> NUMBER .)
+    THEN            reduce using rule 17 (fact -> NUMBER .)
+    PLUS            reduce using rule 17 (fact -> NUMBER .)
+    MINUS           reduce using rule 17 (fact -> NUMBER .)
+    RPAREN          reduce using rule 17 (fact -> NUMBER .)
+    DO              reduce using rule 17 (fact -> NUMBER .)
+    SEMICOLON       reduce using rule 17 (fact -> NUMBER .)
+    $end            reduce using rule 17 (fact -> NUMBER .)
+    OD              reduce using rule 17 (fact -> NUMBER .)
+    ELSE            reduce using rule 17 (fact -> NUMBER .)
+    END             reduce using rule 17 (fact -> NUMBER .)
+    FI              reduce using rule 17 (fact -> NUMBER .)
+    COMMA           reduce using rule 17 (fact -> NUMBER .)
+
+
+state 13
+
+    (35) list -> LBRACKET . sequence RBRACKET
+    (36) list -> LBRACKET . RBRACKET
+    (37) sequence -> . listelement COMMA sequence
+    (38) sequence -> . listelement
+    (39) listelement -> . list
+    (40) listelement -> . NUMBER
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+
+    RBRACKET        shift and go to state 31
+    NUMBER          shift and go to state 30
+    LBRACKET        shift and go to state 13
+
+    listelement                    shift and go to state 32
+    list                           shift and go to state 29
+    sequence                       shift and go to state 28
+
+state 14
+
+    (21) fact -> proc .
+
+    TIMES           reduce using rule 21 (fact -> proc .)
+    CONCAT          reduce using rule 21 (fact -> proc .)
+    THEN            reduce using rule 21 (fact -> proc .)
+    PLUS            reduce using rule 21 (fact -> proc .)
+    MINUS           reduce using rule 21 (fact -> proc .)
+    RPAREN          reduce using rule 21 (fact -> proc .)
+    DO              reduce using rule 21 (fact -> proc .)
+    SEMICOLON       reduce using rule 21 (fact -> proc .)
+    $end            reduce using rule 21 (fact -> proc .)
+    OD              reduce using rule 21 (fact -> proc .)
+    ELSE            reduce using rule 21 (fact -> proc .)
+    END             reduce using rule 21 (fact -> proc .)
+    FI              reduce using rule 21 (fact -> proc .)
+    COMMA           reduce using rule 21 (fact -> proc .)
+
+
+state 15
+
+    (20) fact -> func_call .
+
+    TIMES           reduce using rule 20 (fact -> func_call .)
+    CONCAT          reduce using rule 20 (fact -> func_call .)
+    THEN            reduce using rule 20 (fact -> func_call .)
+    PLUS            reduce using rule 20 (fact -> func_call .)
+    MINUS           reduce using rule 20 (fact -> func_call .)
+    RPAREN          reduce using rule 20 (fact -> func_call .)
+    DO              reduce using rule 20 (fact -> func_call .)
+    SEMICOLON       reduce using rule 20 (fact -> func_call .)
+    $end            reduce using rule 20 (fact -> func_call .)
+    OD              reduce using rule 20 (fact -> func_call .)
+    ELSE            reduce using rule 20 (fact -> func_call .)
+    END             reduce using rule 20 (fact -> func_call .)
+    FI              reduce using rule 20 (fact -> func_call .)
+    COMMA           reduce using rule 20 (fact -> func_call .)
+
+
+state 16
+
+    (18) fact -> IDENT .
+    (41) func_call -> IDENT . LPAREN expr_list RPAREN
+    (32) property -> IDENT . CLASSPROP IDENT
+
+    TIMES           reduce using rule 18 (fact -> IDENT .)
+    CONCAT          reduce using rule 18 (fact -> IDENT .)
+    THEN            reduce using rule 18 (fact -> IDENT .)
+    PLUS            reduce using rule 18 (fact -> IDENT .)
+    MINUS           reduce using rule 18 (fact -> IDENT .)
+    RPAREN          reduce using rule 18 (fact -> IDENT .)
+    DO              reduce using rule 18 (fact -> IDENT .)
+    SEMICOLON       reduce using rule 18 (fact -> IDENT .)
+    $end            reduce using rule 18 (fact -> IDENT .)
+    OD              reduce using rule 18 (fact -> IDENT .)
+    ELSE            reduce using rule 18 (fact -> IDENT .)
+    END             reduce using rule 18 (fact -> IDENT .)
+    FI              reduce using rule 18 (fact -> IDENT .)
+    COMMA           reduce using rule 18 (fact -> IDENT .)
+    LPAREN          shift and go to state 34
+    CLASSPROP       shift and go to state 33
+
+
+state 17
+
+    (16) fact -> LPAREN . expr RPAREN
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr                           shift and go to state 35
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 18
+
+    (12) expr -> term .
+    (13) term -> term . TIMES fact
+    (14) term -> term . CONCAT fact
+
+    RPAREN          reduce using rule 12 (expr -> term .)
+    PLUS            reduce using rule 12 (expr -> term .)
+    MINUS           reduce using rule 12 (expr -> term .)
+    THEN            reduce using rule 12 (expr -> term .)
+    COMMA           reduce using rule 12 (expr -> term .)
+    SEMICOLON       reduce using rule 12 (expr -> term .)
+    $end            reduce using rule 12 (expr -> term .)
+    OD              reduce using rule 12 (expr -> term .)
+    ELSE            reduce using rule 12 (expr -> term .)
+    END             reduce using rule 12 (expr -> term .)
+    FI              reduce using rule 12 (expr -> term .)
+    DO              reduce using rule 12 (expr -> term .)
+    TIMES           shift and go to state 37
+    CONCAT          shift and go to state 36
+
+
+state 19
+
+    (24) while_stmt -> WHILE expr . DO stmt_list OD
+    (8) expr -> expr . PLUS term
+    (9) expr -> expr . MINUS term
+
+    DO              shift and go to state 38
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 20
+
+    (19) fact -> list .
+
+    TIMES           reduce using rule 19 (fact -> list .)
+    CONCAT          reduce using rule 19 (fact -> list .)
+    THEN            reduce using rule 19 (fact -> list .)
+    PLUS            reduce using rule 19 (fact -> list .)
+    MINUS           reduce using rule 19 (fact -> list .)
+    RPAREN          reduce using rule 19 (fact -> list .)
+    DO              reduce using rule 19 (fact -> list .)
+    SEMICOLON       reduce using rule 19 (fact -> list .)
+    $end            reduce using rule 19 (fact -> list .)
+    OD              reduce using rule 19 (fact -> list .)
+    ELSE            reduce using rule 19 (fact -> list .)
+    END             reduce using rule 19 (fact -> list .)
+    FI              reduce using rule 19 (fact -> list .)
+    COMMA           reduce using rule 19 (fact -> list .)
+
+
+state 21
+
+    (23) fact -> property .
+
+    TIMES           reduce using rule 23 (fact -> property .)
+    CONCAT          reduce using rule 23 (fact -> property .)
+    THEN            reduce using rule 23 (fact -> property .)
+    PLUS            reduce using rule 23 (fact -> property .)
+    MINUS           reduce using rule 23 (fact -> property .)
+    RPAREN          reduce using rule 23 (fact -> property .)
+    DO              reduce using rule 23 (fact -> property .)
+    SEMICOLON       reduce using rule 23 (fact -> property .)
+    $end            reduce using rule 23 (fact -> property .)
+    OD              reduce using rule 23 (fact -> property .)
+    ELSE            reduce using rule 23 (fact -> property .)
+    END             reduce using rule 23 (fact -> property .)
+    FI              reduce using rule 23 (fact -> property .)
+    COMMA           reduce using rule 23 (fact -> property .)
+
+
+state 22
+
+    (26) proc -> PROC . LPAREN param_list RPAREN stmt_list END
+    (27) proc -> PROC . LPAREN RPAREN stmt_list END
+
+    LPAREN          shift and go to state 41
+
+
+state 23
+
+    (15) term -> fact .
+
+    TIMES           reduce using rule 15 (term -> fact .)
+    CONCAT          reduce using rule 15 (term -> fact .)
+    DO              reduce using rule 15 (term -> fact .)
+    PLUS            reduce using rule 15 (term -> fact .)
+    MINUS           reduce using rule 15 (term -> fact .)
+    THEN            reduce using rule 15 (term -> fact .)
+    RPAREN          reduce using rule 15 (term -> fact .)
+    SEMICOLON       reduce using rule 15 (term -> fact .)
+    $end            reduce using rule 15 (term -> fact .)
+    OD              reduce using rule 15 (term -> fact .)
+    ELSE            reduce using rule 15 (term -> fact .)
+    END             reduce using rule 15 (term -> fact .)
+    FI              reduce using rule 15 (term -> fact .)
+    COMMA           reduce using rule 15 (term -> fact .)
+
+
+state 24
+
+    (22) assign_stmt -> IDENT ASSIGNOP . expr
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr                           shift and go to state 42
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 25
+
+    (2) stmt_list -> stmt SEMICOLON . stmt_list
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 43
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 26
+
+    (25) if_stmt -> IF expr . THEN stmt_list ELSE stmt_list FI
+    (8) expr -> expr . PLUS term
+    (9) expr -> expr . MINUS term
+
+    THEN            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 27
+
+    (28) class_stmt -> CLASSSYM IDENT . LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> CLASSSYM IDENT . LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> CLASSSYM IDENT . LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> CLASSSYM IDENT . LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    LPAREN          shift and go to state 45
+
+
+state 28
+
+    (35) list -> LBRACKET sequence . RBRACKET
+
+    RBRACKET        shift and go to state 46
+
+
+state 29
+
+    (39) listelement -> list .
+
+    COMMA           reduce using rule 39 (listelement -> list .)
+    RBRACKET        reduce using rule 39 (listelement -> list .)
+
+
+state 30
+
+    (40) listelement -> NUMBER .
+
+    COMMA           reduce using rule 40 (listelement -> NUMBER .)
+    RBRACKET        reduce using rule 40 (listelement -> NUMBER .)
+
+
+state 31
+
+    (36) list -> LBRACKET RBRACKET .
+
+    COMMA           reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    TIMES           reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    CONCAT          reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    DO              reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    PLUS            reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    MINUS           reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    RPAREN          reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    THEN            reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    SEMICOLON       reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    $end            reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    OD              reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    ELSE            reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    END             reduce using rule 36 (list -> LBRACKET RBRACKET .)
+    FI              reduce using rule 36 (list -> LBRACKET RBRACKET .)
+
+
+state 32
+
+    (37) sequence -> listelement . COMMA sequence
+    (38) sequence -> listelement .
+
+    COMMA           shift and go to state 47
+    RBRACKET        reduce using rule 38 (sequence -> listelement .)
+
+
+state 33
+
+    (32) property -> IDENT CLASSPROP . IDENT
+
+    IDENT           shift and go to state 48
+
+
+state 34
+
+    (41) func_call -> IDENT LPAREN . expr_list RPAREN
+    (10) expr_list -> . expr COMMA expr_list
+    (11) expr_list -> . expr
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr_list                      shift and go to state 49
+    list                           shift and go to state 20
+    expr                           shift and go to state 50
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 35
+
+    (16) fact -> LPAREN expr . RPAREN
+    (8) expr -> expr . PLUS term
+    (9) expr -> expr . MINUS term
+
+    RPAREN          shift and go to state 51
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 36
+
+    (14) term -> term CONCAT . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 52
+
+state 37
+
+    (13) term -> term TIMES . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 53
+
+state 38
+
+    (24) while_stmt -> WHILE expr DO . stmt_list OD
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 54
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 39
+
+    (8) expr -> expr PLUS . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 55
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 40
+
+    (9) expr -> expr MINUS . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 56
+    list                           shift and go to state 20
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 41
+
+    (26) proc -> PROC LPAREN . param_list RPAREN stmt_list END
+    (27) proc -> PROC LPAREN . RPAREN stmt_list END
+    (33) param_list -> . IDENT COMMA param_list
+    (34) param_list -> . IDENT
+
+    RPAREN          shift and go to state 58
+    IDENT           shift and go to state 57
+
+    param_list                     shift and go to state 59
+
+state 42
+
+    (22) assign_stmt -> IDENT ASSIGNOP expr .
+    (8) expr -> expr . PLUS term
+    (9) expr -> expr . MINUS term
+
+    SEMICOLON       reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    FI              reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    $end            reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    END             reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    ELSE            reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    OD              reduce using rule 22 (assign_stmt -> IDENT ASSIGNOP expr .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 43
+
+    (2) stmt_list -> stmt SEMICOLON stmt_list .
+
+    ELSE            reduce using rule 2 (stmt_list -> stmt SEMICOLON stmt_list .)
+    $end            reduce using rule 2 (stmt_list -> stmt SEMICOLON stmt_list .)
+    END             reduce using rule 2 (stmt_list -> stmt SEMICOLON stmt_list .)
+    OD              reduce using rule 2 (stmt_list -> stmt SEMICOLON stmt_list .)
+    FI              reduce using rule 2 (stmt_list -> stmt SEMICOLON stmt_list .)
+
+
+state 44
+
+    (25) if_stmt -> IF expr THEN . stmt_list ELSE stmt_list FI
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 60
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 45
+
+    (28) class_stmt -> CLASSSYM IDENT LPAREN . param_list RPAREN stmt_list END
+    (29) class_stmt -> CLASSSYM IDENT LPAREN . param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> CLASSSYM IDENT LPAREN . RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> CLASSSYM IDENT LPAREN . RPAREN SUPER IDENT stmt_list END SEMICOLON END
+    (33) param_list -> . IDENT COMMA param_list
+    (34) param_list -> . IDENT
+
+    RPAREN          shift and go to state 61
+    IDENT           shift and go to state 57
+
+    param_list                     shift and go to state 62
+
+state 46
+
+    (35) list -> LBRACKET sequence RBRACKET .
+
+    COMMA           reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    RBRACKET        reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    TIMES           reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    CONCAT          reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    DO              reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    PLUS            reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    MINUS           reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    RPAREN          reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    THEN            reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    SEMICOLON       reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    $end            reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    OD              reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    ELSE            reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    END             reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+    FI              reduce using rule 35 (list -> LBRACKET sequence RBRACKET .)
+
+
+state 47
+
+    (37) sequence -> listelement COMMA . sequence
+    (37) sequence -> . listelement COMMA sequence
+    (38) sequence -> . listelement
+    (39) listelement -> . list
+    (40) listelement -> . NUMBER
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+
+    NUMBER          shift and go to state 30
+    LBRACKET        shift and go to state 13
+
+    listelement                    shift and go to state 32
+    list                           shift and go to state 29
+    sequence                       shift and go to state 63
+
+state 48
+
+    (32) property -> IDENT CLASSPROP IDENT .
+
+    TIMES           reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    CONCAT          reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    DO              reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    PLUS            reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    MINUS           reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    THEN            reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    RPAREN          reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    SEMICOLON       reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    $end            reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    OD              reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    ELSE            reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    END             reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    FI              reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+    COMMA           reduce using rule 32 (property -> IDENT CLASSPROP IDENT .)
+
+
+state 49
+
+    (41) func_call -> IDENT LPAREN expr_list . RPAREN
+
+    RPAREN          shift and go to state 64
+
+
+state 50
+
+    (10) expr_list -> expr . COMMA expr_list
+    (11) expr_list -> expr .
+    (8) expr -> expr . PLUS term
+    (9) expr -> expr . MINUS term
+
+    COMMA           shift and go to state 65
+    RPAREN          reduce using rule 11 (expr_list -> expr .)
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 40
+
+
+state 51
+
+    (16) fact -> LPAREN expr RPAREN .
+
+    TIMES           reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    CONCAT          reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    THEN            reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    DO              reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    SEMICOLON       reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    $end            reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    OD              reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    ELSE            reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    END             reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    FI              reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+    COMMA           reduce using rule 16 (fact -> LPAREN expr RPAREN .)
+
+
+state 52
+
+    (14) term -> term CONCAT fact .
+
+    TIMES           reduce using rule 14 (term -> term CONCAT fact .)
+    CONCAT          reduce using rule 14 (term -> term CONCAT fact .)
+    DO              reduce using rule 14 (term -> term CONCAT fact .)
+    PLUS            reduce using rule 14 (term -> term CONCAT fact .)
+    MINUS           reduce using rule 14 (term -> term CONCAT fact .)
+    THEN            reduce using rule 14 (term -> term CONCAT fact .)
+    RPAREN          reduce using rule 14 (term -> term CONCAT fact .)
+    SEMICOLON       reduce using rule 14 (term -> term CONCAT fact .)
+    $end            reduce using rule 14 (term -> term CONCAT fact .)
+    OD              reduce using rule 14 (term -> term CONCAT fact .)
+    ELSE            reduce using rule 14 (term -> term CONCAT fact .)
+    END             reduce using rule 14 (term -> term CONCAT fact .)
+    FI              reduce using rule 14 (term -> term CONCAT fact .)
+    COMMA           reduce using rule 14 (term -> term CONCAT fact .)
+
+
+state 53
+
+    (13) term -> term TIMES fact .
+
+    TIMES           reduce using rule 13 (term -> term TIMES fact .)
+    CONCAT          reduce using rule 13 (term -> term TIMES fact .)
+    DO              reduce using rule 13 (term -> term TIMES fact .)
+    PLUS            reduce using rule 13 (term -> term TIMES fact .)
+    MINUS           reduce using rule 13 (term -> term TIMES fact .)
+    THEN            reduce using rule 13 (term -> term TIMES fact .)
+    RPAREN          reduce using rule 13 (term -> term TIMES fact .)
+    SEMICOLON       reduce using rule 13 (term -> term TIMES fact .)
+    $end            reduce using rule 13 (term -> term TIMES fact .)
+    OD              reduce using rule 13 (term -> term TIMES fact .)
+    ELSE            reduce using rule 13 (term -> term TIMES fact .)
+    END             reduce using rule 13 (term -> term TIMES fact .)
+    FI              reduce using rule 13 (term -> term TIMES fact .)
+    COMMA           reduce using rule 13 (term -> term TIMES fact .)
+
+
+state 54
+
+    (24) while_stmt -> WHILE expr DO stmt_list . OD
+
+    OD              shift and go to state 66
+
+
+state 55
+
+    (8) expr -> expr PLUS term .
+    (13) term -> term . TIMES fact
+    (14) term -> term . CONCAT fact
+
+    RPAREN          reduce using rule 8 (expr -> expr PLUS term .)
+    PLUS            reduce using rule 8 (expr -> expr PLUS term .)
+    MINUS           reduce using rule 8 (expr -> expr PLUS term .)
+    THEN            reduce using rule 8 (expr -> expr PLUS term .)
+    COMMA           reduce using rule 8 (expr -> expr PLUS term .)
+    SEMICOLON       reduce using rule 8 (expr -> expr PLUS term .)
+    $end            reduce using rule 8 (expr -> expr PLUS term .)
+    OD              reduce using rule 8 (expr -> expr PLUS term .)
+    ELSE            reduce using rule 8 (expr -> expr PLUS term .)
+    END             reduce using rule 8 (expr -> expr PLUS term .)
+    FI              reduce using rule 8 (expr -> expr PLUS term .)
+    DO              reduce using rule 8 (expr -> expr PLUS term .)
+    TIMES           shift and go to state 37
+    CONCAT          shift and go to state 36
+
+
+state 56
+
+    (9) expr -> expr MINUS term .
+    (13) term -> term . TIMES fact
+    (14) term -> term . CONCAT fact
+
+    RPAREN          reduce using rule 9 (expr -> expr MINUS term .)
+    PLUS            reduce using rule 9 (expr -> expr MINUS term .)
+    MINUS           reduce using rule 9 (expr -> expr MINUS term .)
+    THEN            reduce using rule 9 (expr -> expr MINUS term .)
+    COMMA           reduce using rule 9 (expr -> expr MINUS term .)
+    SEMICOLON       reduce using rule 9 (expr -> expr MINUS term .)
+    $end            reduce using rule 9 (expr -> expr MINUS term .)
+    OD              reduce using rule 9 (expr -> expr MINUS term .)
+    ELSE            reduce using rule 9 (expr -> expr MINUS term .)
+    END             reduce using rule 9 (expr -> expr MINUS term .)
+    FI              reduce using rule 9 (expr -> expr MINUS term .)
+    DO              reduce using rule 9 (expr -> expr MINUS term .)
+    TIMES           shift and go to state 37
+    CONCAT          shift and go to state 36
+
+
+state 57
+
+    (33) param_list -> IDENT . COMMA param_list
+    (34) param_list -> IDENT .
+
+    COMMA           shift and go to state 67
+    RPAREN          reduce using rule 34 (param_list -> IDENT .)
+
+
+state 58
+
+    (27) proc -> PROC LPAREN RPAREN . stmt_list END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 68
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 59
+
+    (26) proc -> PROC LPAREN param_list . RPAREN stmt_list END
+
+    RPAREN          shift and go to state 69
+
+
+state 60
+
+    (25) if_stmt -> IF expr THEN stmt_list . ELSE stmt_list FI
+
+    ELSE            shift and go to state 70
+
+
+state 61
+
+    (30) class_stmt -> CLASSSYM IDENT LPAREN RPAREN . stmt_list END SEMICOLON END
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN . SUPER IDENT stmt_list END SEMICOLON END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    SUPER           shift and go to state 72
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 71
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 62
+
+    (28) class_stmt -> CLASSSYM IDENT LPAREN param_list . RPAREN stmt_list END
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list . RPAREN SUPER IDENT stmt_list END
+
+    RPAREN          shift and go to state 73
+
+
+state 63
+
+    (37) sequence -> listelement COMMA sequence .
+
+    RBRACKET        reduce using rule 37 (sequence -> listelement COMMA sequence .)
+
+
+state 64
+
+    (41) func_call -> IDENT LPAREN expr_list RPAREN .
+
+    TIMES           reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    CONCAT          reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    DO              reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    PLUS            reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    MINUS           reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    THEN            reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    RPAREN          reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    SEMICOLON       reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    $end            reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    OD              reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    ELSE            reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    END             reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    FI              reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+    COMMA           reduce using rule 41 (func_call -> IDENT LPAREN expr_list RPAREN .)
+
+
+state 65
+
+    (10) expr_list -> expr COMMA . expr_list
+    (10) expr_list -> . expr COMMA expr_list
+    (11) expr_list -> . expr
+    (8) expr -> . expr PLUS term
+    (9) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES fact
+    (14) term -> . term CONCAT fact
+    (15) term -> . fact
+    (16) fact -> . LPAREN expr RPAREN
+    (17) fact -> . NUMBER
+    (18) fact -> . IDENT
+    (19) fact -> . list
+    (20) fact -> . func_call
+    (21) fact -> . proc
+    (23) fact -> . property
+    (35) list -> . LBRACKET sequence RBRACKET
+    (36) list -> . LBRACKET RBRACKET
+    (41) func_call -> . IDENT LPAREN expr_list RPAREN
+    (26) proc -> . PROC LPAREN param_list RPAREN stmt_list END
+    (27) proc -> . PROC LPAREN RPAREN stmt_list END
+    (32) property -> . IDENT CLASSPROP IDENT
+
+    LPAREN          shift and go to state 17
+    NUMBER          shift and go to state 12
+    IDENT           shift and go to state 16
+    LBRACKET        shift and go to state 13
+    PROC            shift and go to state 22
+
+    func_call                      shift and go to state 15
+    term                           shift and go to state 18
+    expr                           shift and go to state 50
+    list                           shift and go to state 20
+    expr_list                      shift and go to state 74
+    property                       shift and go to state 21
+    proc                           shift and go to state 14
+    fact                           shift and go to state 23
+
+state 66
+
+    (24) while_stmt -> WHILE expr DO stmt_list OD .
+
+    SEMICOLON       reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+    END             reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+    FI              reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+    $end            reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+    ELSE            reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+    OD              reduce using rule 24 (while_stmt -> WHILE expr DO stmt_list OD .)
+
+
+state 67
+
+    (33) param_list -> IDENT COMMA . param_list
+    (33) param_list -> . IDENT COMMA param_list
+    (34) param_list -> . IDENT
+
+    IDENT           shift and go to state 57
+
+    param_list                     shift and go to state 75
+
+state 68
+
+    (27) proc -> PROC LPAREN RPAREN stmt_list . END
+
+    END             shift and go to state 76
+
+
+state 69
+
+    (26) proc -> PROC LPAREN param_list RPAREN . stmt_list END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 77
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 70
+
+    (25) if_stmt -> IF expr THEN stmt_list ELSE . stmt_list FI
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 78
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 71
+
+    (30) class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list . END SEMICOLON END
+
+    END             shift and go to state 79
+
+
+state 72
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER . IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 80
+
+
+state 73
+
+    (28) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN . stmt_list END
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN . SUPER IDENT stmt_list END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    SUPER           shift and go to state 82
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 81
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 74
+
+    (10) expr_list -> expr COMMA expr_list .
+
+    RPAREN          reduce using rule 10 (expr_list -> expr COMMA expr_list .)
+
+
+state 75
+
+    (33) param_list -> IDENT COMMA param_list .
+
+    RPAREN          reduce using rule 33 (param_list -> IDENT COMMA param_list .)
+
+
+state 76
+
+    (27) proc -> PROC LPAREN RPAREN stmt_list END .
+
+    TIMES           reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    CONCAT          reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    DO              reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    PLUS            reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    MINUS           reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    THEN            reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    RPAREN          reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    SEMICOLON       reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    $end            reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    OD              reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    ELSE            reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    END             reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    FI              reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+    COMMA           reduce using rule 27 (proc -> PROC LPAREN RPAREN stmt_list END .)
+
+
+state 77
+
+    (26) proc -> PROC LPAREN param_list RPAREN stmt_list . END
+
+    END             shift and go to state 83
+
+
+state 78
+
+    (25) if_stmt -> IF expr THEN stmt_list ELSE stmt_list . FI
+
+    FI              shift and go to state 84
+
+
+state 79
+
+    (30) class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END . SEMICOLON END
+
+    SEMICOLON       shift and go to state 85
+
+
+state 80
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT . stmt_list END SEMICOLON END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 86
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 81
+
+    (28) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list . END
+
+    END             shift and go to state 87
+
+
+state 82
+
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER . IDENT stmt_list END
+
+    IDENT           shift and go to state 88
+
+
+state 83
+
+    (26) proc -> PROC LPAREN param_list RPAREN stmt_list END .
+
+    TIMES           reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    CONCAT          reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    DO              reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    PLUS            reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    MINUS           reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    THEN            reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    RPAREN          reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    SEMICOLON       reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    $end            reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    OD              reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    ELSE            reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    END             reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    FI              reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+    COMMA           reduce using rule 26 (proc -> PROC LPAREN param_list RPAREN stmt_list END .)
+
+
+state 84
+
+    (25) if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .
+
+    SEMICOLON       reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+    END             reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+    FI              reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+    OD              reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+    $end            reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+    ELSE            reduce using rule 25 (if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI .)
+
+
+state 85
+
+    (30) class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON . END
+
+    END             shift and go to state 89
+
+
+state 86
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list . END SEMICOLON END
+
+    END             shift and go to state 90
+
+
+state 87
+
+    (28) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .
+
+    SEMICOLON       reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+    $end            reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+    ELSE            reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+    OD              reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+    END             reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+    FI              reduce using rule 28 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END .)
+
+
+state 88
+
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT . stmt_list END
+    (2) stmt_list -> . stmt SEMICOLON stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . assign_stmt
+    (5) stmt -> . while_stmt
+    (6) stmt -> . if_stmt
+    (7) stmt -> . class_stmt
+    (22) assign_stmt -> . IDENT ASSIGNOP expr
+    (24) while_stmt -> . WHILE expr DO stmt_list OD
+    (25) if_stmt -> . IF expr THEN stmt_list ELSE stmt_list FI
+    (28) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+    (29) class_stmt -> . CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+    (30) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END
+    (31) class_stmt -> . CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END
+
+    IDENT           shift and go to state 4
+    WHILE           shift and go to state 1
+    IF              shift and go to state 6
+    CLASSSYM        shift and go to state 11
+
+    stmt_list                      shift and go to state 91
+    if_stmt                        shift and go to state 8
+    stmt                           shift and go to state 5
+    assign_stmt                    shift and go to state 2
+    while_stmt                     shift and go to state 9
+    class_stmt                     shift and go to state 10
+
+state 89
+
+    (30) class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .
+
+    SEMICOLON       reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+    $end            reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+    ELSE            reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+    OD              reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+    END             reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+    FI              reduce using rule 30 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END .)
+
+
+state 90
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END . SEMICOLON END
+
+    SEMICOLON       shift and go to state 92
+
+
+state 91
+
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list . END
+
+    END             shift and go to state 93
+
+
+state 92
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON . END
+
+    END             shift and go to state 94
+
+
+state 93
+
+    (29) class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .
+
+    SEMICOLON       reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+    $end            reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+    ELSE            reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+    OD              reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+    END             reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+    FI              reduce using rule 29 (class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END .)
+
+
+state 94
+
+    (31) class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .
+
+    SEMICOLON       reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+    $end            reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+    ELSE            reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+    OD              reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+    END             reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+    FI              reduce using rule 31 (class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END .)
+

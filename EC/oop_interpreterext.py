@@ -21,7 +21,7 @@
 #
 
 import sys
-from static_programext import *
+from oop_programext import *
 import common
 
 ######   LEXER   ###############################
@@ -52,7 +52,10 @@ tokens = (
 		'PROC',
 		'END',
 		'IDENT',
-		'CONCAT'
+		'CONCAT',
+		'CLASSSYM',
+		'SUPER',
+		'CLASSPROP'
 		)
 
 # These are all caught in the IDENT rule, typed there.
@@ -65,7 +68,8 @@ reserved = {
 	'else'		: 'ELSE',
 	'fi'			: 'FI',
 	'proc'		: 'PROC',
-	'end'		: 'END'
+	'class'		: 'CLASSSYM',
+	'end'			: 'END'
 }
 
 # Now, this section.  We have a mapping, REs to token types (please note
@@ -84,11 +88,12 @@ t_LBRACKET      = r'\['
 t_RBRACKET      = r'\]'
 t_ASSIGNOP      = r':='
 t_SEMICOLON     = r';'
+t_SUPER					= r':'
 t_COMMA         = r','
+t_CLASSPROP			= r'\.'
 
 def t_IDENT( t ):
-	#r'[a-zA-Z_][a-zA-Z_0-9]*'
-	r'[a-z]+'
+	r'[a-zA-Z_][a-zA-Z_0-9]*'
 	t.type = reserved.get( t.value, 'IDENT' )    # Check for reserved words
 	return t
 
@@ -147,7 +152,8 @@ def p_stmt_list( p ) :
 def p_stmt( p ) :
 	'''stmt : assign_stmt
 		| while_stmt
-		| if_stmt'''
+		| if_stmt
+		| class_stmt'''
 	p[0] = p[1]
 
 def p_add( p ) :
@@ -211,6 +217,10 @@ def p_assn( p ) :
 	'assign_stmt : IDENT ASSIGNOP expr'
 	p[0] = AssignStmt( p[1], p[3] )
 
+def p_fact_property( p ) :
+	'fact : property'
+	p[0] = p[1]
+
 def p_while( p ) :
 	'while_stmt : WHILE expr DO stmt_list OD'
 	p[0] = WhileStmt( p[2], p[4] )
@@ -222,10 +232,23 @@ def p_if( p ) :
 def p_proc(p):
 	'''proc : PROC LPAREN param_list RPAREN stmt_list END
 		| PROC LPAREN RPAREN stmt_list END'''
-	if len(p)==7:
-		p[0] = Proc( p[3], p[5] )
+	p[0] = Proc( p[3], p[5] )
+
+def p_class(p):
+	'''class_stmt : CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
+		| CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
+		| CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END 
+		| CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END'''
+
+	if len(p)==8:
+		p[0] = Class( p[2],p[4],p[6] )
 	else:
-		p[0] = Proc([], p[5] )
+		p[0] = Class( p[2],p[4],p[6],p[9] )
+
+def p_property(p):
+	'''property : IDENT CLASSPROP IDENT'''
+	p[0] = Property(p[1],p[3])
+
 
 def p_param_list( p ) :
 	'''param_list : IDENT COMMA param_list

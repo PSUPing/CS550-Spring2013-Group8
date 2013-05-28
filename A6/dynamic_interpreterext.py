@@ -220,8 +220,12 @@ def p_if( p ) :
 	p[0] = IfStmt( p[2], p[4], p[6] )
 
 def p_proc(p):
-	'proc : PROC LPAREN param_list RPAREN stmt_list END'
-	p[0] = Proc( p[3], p[5] )
+	'''proc : PROC LPAREN param_list RPAREN stmt_list END
+		| PROC LPAREN RPAREN stmt_list END'''
+	if len(p)==7:
+		p[0] = Proc( p[3], p[5] )
+	else:
+		p[0] = Proc([],p[5])
 
 def p_param_list( p ) :
 	'''param_list : IDENT COMMA param_list

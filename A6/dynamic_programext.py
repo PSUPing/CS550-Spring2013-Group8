@@ -298,7 +298,6 @@ class Proc(Expr) :
 	
 	def apply( self, nt, args ) :
 		newEnv = Environment(nt)
-		newEnv.addFrame()
 		self.env=newEnv
 
 				# sanity check, # of args
@@ -458,15 +457,19 @@ class Environment :
 		if copy==None:
 			self.env=[{}]
 		else:
-			self.env=copy.env[:]
+			self.env=[{},copy]
 	
 	def get(self,ident):
-		for i in range(len(self.env)):
-			try:
-				store=self.env[i][ident]
-				return store;
-			except:
-				pass
+		try:
+			store=self.env[0][ident]
+			return store;
+		except:
+			pass
+		try:
+			store=self.env[1].get(ident)
+			return store;
+		except:
+			pass
 		raise LookupError("Identifier not in the environment")
 
 	def set(self,ident,value):
@@ -477,6 +480,9 @@ class Environment :
 	
 	def __str__(self):
 		s=''
-		for i in range(len(self.env)):
-			s+=str(self.env[i])
+		s+=str(self.env[0])
+		try:
+			s+=str(self.env[1])
+		except:
+			pass
 		return s
