@@ -1,0 +1,4 @@
+makeaccount := proc (n) return := proc(a) return:=n - a end end; 
+withdrawl:= makeaccount(500);
+n:=300;
+newtotal:=withdrawl(50)
