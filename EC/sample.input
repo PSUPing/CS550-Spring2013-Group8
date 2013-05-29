@@ -1,13 +1,22 @@
-class test(num)
+class testa(num)
 L := num;
 Cons := proc(x) return := cons(x,L) end;
 Car :=proc() return := car(L) end;
 Cdr :=proc() return := cdr(L) end
 end;
 
-L:=test([]);
-L.Cons(3);
-L.Cons(2);
-L.Cons(1);
-x:=L.Car();
-M:=L.Cdr()
+class testb(num):testa
+B:=num
+end;
+
+class testc(num):testa
+C:=num
+end;
+
+B:=testb(3);
+C:=testc(5);
+
+w:=B.B;
+x:=C.C;
+y:=B.L;
+z:=C.L

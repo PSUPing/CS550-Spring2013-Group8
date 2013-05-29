@@ -252,12 +252,17 @@ def p_proc(p):
 def p_class(p):
 	'''class_stmt : CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
 		| CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END
-		| CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END 
-		| CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END'''
-	if len(p)==8:
+		| CLASSSYM IDENT LPAREN RPAREN stmt_list END 
+		| CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END'''
+	if len(p)==8  and p[5]!=':':
 		p[0] = Class( p[2],p[4],p[6] )
+	elif len(p)== 10:
+		p[0] = Class( p[2],p[4],p[8],p[7] )
+	elif len(p)== 7:
+		p[0] = Class( p[2],[],p[5])
 	else:
-		p[0] = Class( p[2],p[4],p[6],p[9] )
+		p[0] = Class( p[2],[],p[7],p[6])
+		
 
 
 def p_param_list( p ) :

@@ -57,6 +57,7 @@
 
 import sys
 import common
+import copy
 
 ####  CONSTANTS   ################
 
@@ -380,22 +381,29 @@ class Class() :
 
 	def eval( self ,nt):
 		nt.set(self.name, self)
-		newEnv = Environment(nt)
-		self.env=newEnv
+		self.env=nt
 	
 	def apply( self, nt, args) :
-		if len( args ) is not len( self.parList ) :
+		t=copy.deepcopy(self)
+		t.env = Environment(t.env)
+		if len( args ) is not len( t.parList ) :
 			print "Param count does not match:"
 			sys.exit( 1 )
 				# sanity check, # of args
-		if self.superClassName is not None:
-			self.superClass=nt.get(self.superClassName).apply(nt,args)
-		else:
-			self.superClass=None
-		
+				
 		# bind parameters in new name table (the only things there right now)
 		for i in range( len( args )) :
-			self.env.set(self.parList[i], args[i].eval( nt))
+			t.env.set(t.parList[i], args[i].eval( nt))
+
+		if t.superClassName is not None:
+			sc=t.env.get(t.superClassName)
+			newArgs=[]
+			for i in sc.parList:
+				newArgs.append(Ident(i))
+			t.superClass=sc.apply(t.env,newArgs)
+		else:
+			t.superClass=None
+
 		
 		# KS Don't know what I was doin' here, but it's wrong 3/08
 		# Thank you, Charles
@@ -406,16 +414,20 @@ class Class() :
 		# function table.  Note that the proc's return value is stored as
 		# 'return in its nametable
 		
-		self.body.eval( self.env )
-		return self
+		t.body.eval( t.env )
+		return t
 	
 	def getSub(self,sub, nt):
+		print sub
+		print self.env
+		if self.superClass is not None:
+			print self.superClass.env
 		try:
 			return self.env.env[0][sub]
 		except:
 			pass
 		try:
-			return self.superClass.env.get(sub)
+			return self.superClass.getSub(sub,nt)
 		except:
 			raise LookupError("Class does not have the given property or method")
 
