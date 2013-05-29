@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = '\xd4f\x87\x81\xb3\xfa\x9au\xac"\x8f\xfa\xdb\xa3\xd9\xb3'
+_lr_signature = 's(\x95\xaa\x92\x8b\\v\xafL\xc6\x05X\xdd-~'
     
-_lr_action_items = {'DO':([12,14,15,16,18,19,20,21,22,24,32,46,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,-12,38,-19,-34,-23,-15,-36,-35,-16,-14,-13,-8,-9,-41,-27,-26,]),'THEN':([12,14,15,16,18,20,21,22,24,27,32,46,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,-12,-19,-34,-23,-15,44,-36,-35,-16,-14,-13,-8,-9,-41,-27,-26,]),'NUMBER':([1,6,13,17,25,34,36,37,39,40,47,64,],[12,12,31,12,12,12,12,12,12,12,31,12,]),'LBRACKET':([1,6,13,17,25,34,36,37,39,40,47,64,],[13,13,13,13,13,13,13,13,13,13,13,13,]),'WHILE':([0,26,38,44,57,60,68,69,72,79,87,],[1,1,1,1,1,1,1,1,1,1,1,]),'FI':([2,5,8,9,10,12,14,15,16,18,20,21,22,24,32,42,43,46,50,51,52,54,55,63,65,75,77,82,83,86,88,92,93,],[-4,-3,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-2,-35,-16,-14,-13,-8,-9,-41,-24,-27,83,-26,-25,-28,-30,-29,-31,]),'MINUS':([12,14,15,16,18,19,20,21,22,24,27,32,35,42,46,49,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,-12,40,-19,-34,-23,-15,40,-36,40,40,-35,40,-16,-14,-13,-8,-9,-41,-27,-26,]),'CONCAT':([12,14,15,16,18,20,21,22,24,32,46,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,36,-19,-34,-23,-15,-36,-35,-16,-14,-13,36,36,-41,-27,-26,]),'RPAREN':([12,14,15,16,18,20,21,22,24,32,35,41,45,46,48,49,50,51,52,54,55,56,58,61,63,73,74,75,82,],[-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,50,57,60,-35,63,-11,-16,-14,-13,-8,-9,-33,68,72,-41,-10,-32,-27,-26,]),'SEMICOLON':([2,5,8,9,10,12,14,15,16,18,20,21,22,24,32,42,46,50,51,52,54,55,63,65,75,78,82,83,86,88,89,92,93,],[-4,26,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-35,-16,-14,-13,-8,-9,-41,-24,-27,84,-26,-25,-28,-30,91,-29,-31,]),'PLUS':([12,14,15,16,18,19,20,21,22,24,27,32,35,42,46,49,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,-12,39,-19,-34,-23,-15,39,-36,39,39,-35,39,-16,-14,-13,-8,-9,-41,-27,-26,]),'COMMA':([12,14,15,16,18,20,21,22,24,30,31,32,33,46,49,50,51,52,54,55,56,63,75,82,],[-17,-21,-20,-18,-12,-19,-34,-23,-15,-39,-40,-36,47,-35,64,-16,-14,-13,-8,-9,66,-41,-27,-26,]),'$end':([2,3,5,7,8,9,10,12,14,15,16,18,20,21,22,24,32,42,43,46,50,51,52,54,55,63,65,75,82,83,86,88,92,93,],[-4,0,-3,-1,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-2,-35,-16,-14,-13,-8,-9,-41,-24,-27,-26,-25,-28,-30,-29,-31,]),'IDENT':([0,1,6,11,17,25,26,34,36,37,38,39,40,41,44,45,57,60,64,66,68,69,71,72,79,81,87,],[4,16,16,28,16,16,4,16,16,16,4,16,16,56,4,56,4,4,16,56,4,4,79,4,4,87,4,]),'END':([2,5,8,9,10,12,14,15,16,18,20,21,22,24,32,42,43,46,50,51,52,54,55,63,65,67,70,75,76,80,82,83,84,85,86,88,90,91,92,93,],[-4,-3,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-2,-35,-16,-14,-13,-8,-9,-41,-24,75,78,-27,82,86,-26,-25,88,89,-28,-30,92,93,-29,-31,]),'TIMES':([12,14,15,16,18,20,21,22,24,32,46,50,51,52,54,55,63,75,82,],[-17,-21,-20,-18,37,-19,-34,-23,-15,-36,-35,-16,-14,-13,37,37,-41,-27,-26,]),'LPAREN':([1,6,16,17,23,25,28,34,36,37,39,40,64,],[17,17,34,17,41,17,45,17,17,17,17,17,17,]),'ELSE':([2,5,8,9,10,12,14,15,16,18,20,21,22,24,32,42,43,46,50,51,52,54,55,59,63,65,75,82,83,86,88,92,93,],[-4,-3,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-2,-35,-16,-14,-13,-8,-9,69,-41,-24,-27,-26,-25,-28,-30,-29,-31,]),'IF':([0,26,38,44,57,60,68,69,72,79,87,],[6,6,6,6,6,6,6,6,6,6,6,]),'ASSIGNOP':([4,],[25,]),'SUPER':([60,72,],[71,81,]),'OD':([2,5,8,9,10,12,14,15,16,18,20,21,22,24,32,42,43,46,50,51,52,53,54,55,63,65,75,82,83,86,88,92,93,],[-4,-3,-6,-5,-7,-17,-21,-20,-18,-12,-19,-34,-23,-15,-36,-22,-2,-35,-16,-14,-13,65,-8,-9,-41,-24,-27,-26,-25,-28,-30,-29,-31,]),'PROP':([1,6,17,25,34,36,37,39,40,64,],[21,21,21,21,21,21,21,21,21,21,]),'RBRACKET':([13,29,30,31,32,33,46,62,],[32,46,-39,-40,-36,-38,-35,-37,]),'PROC':([1,6,17,25,34,36,37,39,40,64,],[23,23,23,23,23,23,23,23,23,23,]),'CLASSSYM':([0,26,38,44,57,60,68,69,72,79,87,],[11,11,11,11,11,11,11,11,11,11,11,]),}
+_lr_action_items = {'DO':([12,14,15,16,17,19,20,21,22,23,25,33,48,51,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,-12,39,-19,-25,-24,-15,-37,-36,-42,-16,-14,-13,-8,-9,-45,-43,-44,-29,-28,]),'THEN':([12,14,15,16,17,19,21,22,23,25,28,33,48,51,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,46,-37,-36,-42,-16,-14,-13,-8,-9,-45,-43,-44,-29,-28,]),'NUMBER':([1,6,13,18,26,35,37,38,40,41,42,49,69,],[12,12,32,12,12,12,12,12,12,12,12,32,12,]),'LBRACKET':([1,6,13,18,26,35,37,38,40,41,42,49,69,],[13,13,13,13,13,13,13,13,13,13,13,13,13,]),'WHILE':([0,27,39,46,62,65,74,75,78,85,93,],[1,1,1,1,1,1,1,1,1,1,1,]),'FI':([2,5,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,45,48,51,53,54,55,57,58,60,68,70,71,81,83,88,89,92,94,98,99,],[-4,-3,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-2,-36,-42,-16,-14,-13,-8,-9,-45,-43,-26,-44,-29,89,-28,-27,-30,-32,-31,-33,]),'MINUS':([12,14,15,16,17,19,20,21,22,23,25,28,33,36,44,48,51,52,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,-12,41,-19,-25,-24,-15,41,-37,41,41,-36,-42,41,-16,-14,-13,-8,-9,-45,-43,-44,-29,-28,]),'CONCAT':([12,14,15,16,17,19,21,22,23,25,33,48,51,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,37,-19,-25,-24,-15,-37,-36,-42,-16,-14,-13,37,37,-45,-43,-44,-29,-28,]),'RPAREN':([12,14,15,16,17,19,21,22,23,25,33,35,36,42,43,47,48,50,51,52,53,54,55,57,58,59,60,61,63,66,68,71,79,80,81,88,],[-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,51,53,60,62,65,-36,68,-42,-11,-16,-14,-13,-8,-9,71,-45,-35,74,78,-43,-44,-10,-34,-29,-28,]),'SEMICOLON':([2,5,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,48,51,53,54,55,57,58,60,68,70,71,81,84,88,89,92,94,95,98,99,],[-4,27,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-36,-42,-16,-14,-13,-8,-9,-45,-43,-26,-44,-29,90,-28,-27,-30,-32,97,-31,-33,]),'PLUS':([12,14,15,16,17,19,20,21,22,23,25,28,33,36,44,48,51,52,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,-12,40,-19,-25,-24,-15,40,-37,40,40,-36,-42,40,-16,-14,-13,-8,-9,-45,-43,-44,-29,-28,]),'COMMA':([12,14,15,16,17,19,21,22,23,25,31,32,33,34,48,51,52,53,54,55,57,58,60,61,68,71,81,88,],[-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-40,-41,-37,49,-36,-42,69,-16,-14,-13,-8,-9,-45,72,-43,-44,-29,-28,]),'$end':([2,3,5,7,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,45,48,51,53,54,55,57,58,60,68,70,71,81,88,89,92,94,98,99,],[-4,0,-3,-1,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-2,-36,-42,-16,-14,-13,-8,-9,-45,-43,-26,-44,-29,-28,-27,-30,-32,-31,-33,]),'IDENT':([0,1,6,11,18,26,27,35,37,38,39,40,41,42,43,46,47,62,65,69,72,74,75,77,78,85,87,93,],[4,17,17,29,17,17,4,17,17,17,4,17,17,17,61,4,61,4,4,17,61,4,4,85,4,4,93,4,]),'END':([2,5,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,45,48,51,53,54,55,57,58,60,68,70,71,73,76,81,82,86,88,89,90,91,92,94,96,97,98,99,],[-4,-3,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-2,-36,-42,-16,-14,-13,-8,-9,-45,-43,-26,-44,81,84,-29,88,92,-28,-27,94,95,-30,-32,98,99,-31,-33,]),'TIMES':([12,14,15,16,17,19,21,22,23,25,33,48,51,53,54,55,57,58,60,68,71,81,88,],[-17,-21,-22,-20,-18,38,-19,-25,-24,-15,-37,-36,-42,-16,-14,-13,38,38,-45,-43,-44,-29,-28,]),'LPAREN':([1,6,17,18,22,23,24,26,29,35,37,38,40,41,42,69,],[18,18,35,18,-25,42,43,18,47,18,18,18,18,18,18,18,]),'ELSE':([2,5,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,45,48,51,53,54,55,57,58,60,64,68,70,71,81,88,89,92,94,98,99,],[-4,-3,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-2,-36,-42,-16,-14,-13,-8,-9,-45,75,-43,-26,-44,-29,-28,-27,-30,-32,-31,-33,]),'IF':([0,27,39,46,62,65,74,75,78,85,93,],[6,6,6,6,6,6,6,6,6,6,6,]),'ASSIGNOP':([4,],[26,]),'SUPER':([65,78,],[77,87,]),'OD':([2,5,8,9,10,12,14,15,16,17,19,21,22,23,25,33,44,45,48,51,53,54,55,56,57,58,60,68,70,71,81,88,89,92,94,98,99,],[-4,-3,-6,-5,-7,-17,-21,-22,-20,-18,-12,-19,-25,-24,-15,-37,-23,-2,-36,-42,-16,-14,-13,70,-8,-9,-45,-43,-26,-44,-29,-28,-27,-30,-32,-31,-33,]),'PROP':([1,6,18,26,35,37,38,40,41,42,69,],[22,22,22,22,22,22,22,22,22,22,22,]),'RBRACKET':([13,30,31,32,33,34,48,67,],[33,48,-40,-41,-37,-39,-36,-38,]),'PROC':([1,6,18,26,35,37,38,40,41,42,69,],[24,24,24,24,24,24,24,24,24,24,24,]),'CLASSSYM':([0,27,39,46,62,65,74,75,78,85,93,],[11,11,11,11,11,11,11,11,11,11,11,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'stmt_list':([0,26,38,44,57,60,68,69,72,79,87,],[7,43,53,59,67,70,76,77,80,85,90,]),'func_call':([1,6,17,25,34,36,37,39,40,64,],[15,15,15,15,15,15,15,15,15,15,]),'term':([1,6,17,25,34,39,40,64,],[18,18,18,18,18,54,55,18,]),'listelement':([13,47,],[33,33,]),'if_stmt':([0,26,38,44,57,60,68,69,72,79,87,],[8,8,8,8,8,8,8,8,8,8,8,]),'sequence':([13,47,],[29,62,]),'param_list':([41,45,66,],[58,61,74,]),'expr':([1,6,17,25,34,64,],[19,27,35,42,49,49,]),'list':([1,6,13,17,25,34,36,37,39,40,47,64,],[20,20,30,20,20,20,20,20,20,20,30,20,]),'stmt':([0,26,38,44,57,60,68,69,72,79,87,],[5,5,5,5,5,5,5,5,5,5,5,]),'assign_stmt':([0,26,38,44,57,60,68,69,72,79,87,],[2,2,2,2,2,2,2,2,2,2,2,]),'while_stmt':([0,26,38,44,57,60,68,69,72,79,87,],[9,9,9,9,9,9,9,9,9,9,9,]),'program':([0,],[3,]),'expr_list':([34,64,],[48,73,]),'property':([1,6,17,25,34,36,37,39,40,64,],[22,22,22,22,22,22,22,22,22,22,]),'proc':([1,6,17,25,34,36,37,39,40,64,],[14,14,14,14,14,14,14,14,14,14,]),'fact':([1,6,17,25,34,36,37,39,40,64,],[24,24,24,24,24,51,52,24,24,24,]),'class_stmt':([0,26,38,44,57,60,68,69,72,79,87,],[10,10,10,10,10,10,10,10,10,10,10,]),}
+_lr_goto_items = {'stmt_list':([0,27,39,46,62,65,74,75,78,85,93,],[7,45,56,64,73,76,82,83,86,91,96,]),'func_call':([1,6,18,26,35,37,38,40,41,42,69,],[16,16,16,16,16,16,16,16,16,16,16,]),'term':([1,6,18,26,35,40,41,42,69,],[19,19,19,19,19,57,58,19,19,]),'listelement':([13,49,],[34,34,]),'if_stmt':([0,27,39,46,62,65,74,75,78,85,93,],[8,8,8,8,8,8,8,8,8,8,8,]),'prop_func_call':([1,6,18,26,35,37,38,40,41,42,69,],[14,14,14,14,14,14,14,14,14,14,14,]),'param_list':([43,47,72,],[63,66,80,]),'expr':([1,6,18,26,35,42,69,],[20,28,36,44,52,52,52,]),'sequence':([13,49,],[30,67,]),'list':([1,6,13,18,26,35,37,38,40,41,42,49,69,],[21,21,31,21,21,21,21,21,21,21,21,31,21,]),'stmt':([0,27,39,46,62,65,74,75,78,85,93,],[5,5,5,5,5,5,5,5,5,5,5,]),'assign_stmt':([0,27,39,46,62,65,74,75,78,85,93,],[2,2,2,2,2,2,2,2,2,2,2,]),'while_stmt':([0,27,39,46,62,65,74,75,78,85,93,],[9,9,9,9,9,9,9,9,9,9,9,]),'program':([0,],[3,]),'expr_list':([35,42,69,],[50,59,79,]),'property':([1,6,18,26,35,37,38,40,41,42,69,],[23,23,23,23,23,23,23,23,23,23,23,]),'proc':([1,6,18,26,35,37,38,40,41,42,69,],[15,15,15,15,15,15,15,15,15,15,15,]),'fact':([1,6,18,26,35,37,38,40,41,42,69,],[25,25,25,25,25,54,55,25,25,25,25,]),'class_stmt':([0,27,39,46,62,65,74,75,78,85,93,],[10,10,10,10,10,10,10,10,10,10,10,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -26,45 +26,49 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> stmt_list','program',1,'p_program','oop_interpreterext.py',139),
-  ('stmt_list -> stmt SEMICOLON stmt_list','stmt_list',3,'p_stmt_list','oop_interpreterext.py',147),
-  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','oop_interpreterext.py',148),
-  ('stmt -> assign_stmt','stmt',1,'p_stmt','oop_interpreterext.py',157),
-  ('stmt -> while_stmt','stmt',1,'p_stmt','oop_interpreterext.py',158),
-  ('stmt -> if_stmt','stmt',1,'p_stmt','oop_interpreterext.py',159),
-  ('stmt -> class_stmt','stmt',1,'p_stmt','oop_interpreterext.py',160),
-  ('expr -> expr PLUS term','expr',3,'p_add','oop_interpreterext.py',164),
-  ('expr -> expr MINUS term','expr',3,'p_sub','oop_interpreterext.py',168),
-  ('expr_list -> expr COMMA expr_list','expr_list',3,'p_expr_list','oop_interpreterext.py',172),
-  ('expr_list -> expr','expr_list',1,'p_expr_list','oop_interpreterext.py',173),
-  ('expr -> term','expr',1,'p_expr_term','oop_interpreterext.py',181),
-  ('term -> term TIMES fact','term',3,'p_mult','oop_interpreterext.py',185),
-  ('term -> term CONCAT fact','term',3,'p_term_CONCAT','oop_interpreterext.py',189),
-  ('term -> fact','term',1,'p_term_fact','oop_interpreterext.py',193),
-  ('fact -> LPAREN expr RPAREN','fact',3,'p_fact_expr','oop_interpreterext.py',197),
-  ('fact -> NUMBER','fact',1,'p_fact_NUM','oop_interpreterext.py',201),
-  ('fact -> IDENT','fact',1,'p_fact_IDENT','oop_interpreterext.py',205),
-  ('fact -> list','fact',1,'p_fact_list','oop_interpreterext.py',209),
-  ('fact -> func_call','fact',1,'p_fact_funcall','oop_interpreterext.py',213),
-  ('fact -> proc','fact',1,'p_fact_proc','oop_interpreterext.py',217),
-  ('assign_stmt -> IDENT ASSIGNOP expr','assign_stmt',3,'p_assn','oop_interpreterext.py',221),
-  ('fact -> property','fact',1,'p_fact_property','oop_interpreterext.py',225),
-  ('while_stmt -> WHILE expr DO stmt_list OD','while_stmt',5,'p_while','oop_interpreterext.py',229),
-  ('if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI','if_stmt',7,'p_if','oop_interpreterext.py',233),
-  ('proc -> PROC LPAREN param_list RPAREN stmt_list END','proc',6,'p_proc','oop_interpreterext.py',237),
-  ('proc -> PROC LPAREN RPAREN stmt_list END','proc',5,'p_proc','oop_interpreterext.py',238),
-  ('class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END','class_stmt',7,'p_class','oop_interpreterext.py',242),
-  ('class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END','class_stmt',9,'p_class','oop_interpreterext.py',243),
-  ('class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END','class_stmt',8,'p_class','oop_interpreterext.py',244),
-  ('class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END','class_stmt',10,'p_class','oop_interpreterext.py',245),
-  ('param_list -> IDENT COMMA param_list','param_list',3,'p_param_list','oop_interpreterext.py',253),
-  ('param_list -> IDENT','param_list',1,'p_param_list','oop_interpreterext.py',254),
-  ('property -> PROP','property',1,'p_property','oop_interpreterext.py',262),
-  ('list -> LBRACKET sequence RBRACKET','list',3,'p_list','oop_interpreterext.py',266),
-  ('list -> LBRACKET RBRACKET','list',2,'p_list','oop_interpreterext.py',267),
-  ('sequence -> listelement COMMA sequence','sequence',3,'p_sequence','oop_interpreterext.py',274),
-  ('sequence -> listelement','sequence',1,'p_sequence','oop_interpreterext.py',275),
-  ('listelement -> list','listelement',1,'p_listelement','oop_interpreterext.py',309),
-  ('listelement -> NUMBER','listelement',1,'p_listelement','oop_interpreterext.py',310),
-  ('func_call -> IDENT LPAREN expr_list RPAREN','func_call',4,'p_func_call','oop_interpreterext.py',314),
+  ('program -> stmt_list','program',1,'p_program','oop_interpreterext.py',138),
+  ('stmt_list -> stmt SEMICOLON stmt_list','stmt_list',3,'p_stmt_list','oop_interpreterext.py',146),
+  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','oop_interpreterext.py',147),
+  ('stmt -> assign_stmt','stmt',1,'p_stmt','oop_interpreterext.py',156),
+  ('stmt -> while_stmt','stmt',1,'p_stmt','oop_interpreterext.py',157),
+  ('stmt -> if_stmt','stmt',1,'p_stmt','oop_interpreterext.py',158),
+  ('stmt -> class_stmt','stmt',1,'p_stmt','oop_interpreterext.py',159),
+  ('expr -> expr PLUS term','expr',3,'p_add','oop_interpreterext.py',163),
+  ('expr -> expr MINUS term','expr',3,'p_sub','oop_interpreterext.py',167),
+  ('expr_list -> expr COMMA expr_list','expr_list',3,'p_expr_list','oop_interpreterext.py',171),
+  ('expr_list -> expr','expr_list',1,'p_expr_list','oop_interpreterext.py',172),
+  ('expr -> term','expr',1,'p_expr_term','oop_interpreterext.py',180),
+  ('term -> term TIMES fact','term',3,'p_mult','oop_interpreterext.py',184),
+  ('term -> term CONCAT fact','term',3,'p_term_CONCAT','oop_interpreterext.py',188),
+  ('term -> fact','term',1,'p_term_fact','oop_interpreterext.py',192),
+  ('fact -> LPAREN expr RPAREN','fact',3,'p_fact_expr','oop_interpreterext.py',196),
+  ('fact -> NUMBER','fact',1,'p_fact_NUM','oop_interpreterext.py',200),
+  ('fact -> IDENT','fact',1,'p_fact_IDENT','oop_interpreterext.py',204),
+  ('fact -> list','fact',1,'p_fact_list','oop_interpreterext.py',208),
+  ('fact -> func_call','fact',1,'p_fact_funcall','oop_interpreterext.py',212),
+  ('fact -> prop_func_call','fact',1,'p_fact_prop_funcall','oop_interpreterext.py',216),
+  ('fact -> proc','fact',1,'p_fact_proc','oop_interpreterext.py',221),
+  ('assign_stmt -> IDENT ASSIGNOP expr','assign_stmt',3,'p_assn','oop_interpreterext.py',225),
+  ('fact -> property','fact',1,'p_fact_property','oop_interpreterext.py',229),
+  ('property -> PROP','property',1,'p_property','oop_interpreterext.py',233),
+  ('while_stmt -> WHILE expr DO stmt_list OD','while_stmt',5,'p_while','oop_interpreterext.py',237),
+  ('if_stmt -> IF expr THEN stmt_list ELSE stmt_list FI','if_stmt',7,'p_if','oop_interpreterext.py',241),
+  ('proc -> PROC LPAREN param_list RPAREN stmt_list END','proc',6,'p_proc','oop_interpreterext.py',245),
+  ('proc -> PROC LPAREN RPAREN stmt_list END','proc',5,'p_proc','oop_interpreterext.py',246),
+  ('class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END','class_stmt',7,'p_class','oop_interpreterext.py',250),
+  ('class_stmt -> CLASSSYM IDENT LPAREN param_list RPAREN SUPER IDENT stmt_list END','class_stmt',9,'p_class','oop_interpreterext.py',251),
+  ('class_stmt -> CLASSSYM IDENT LPAREN RPAREN stmt_list END SEMICOLON END','class_stmt',8,'p_class','oop_interpreterext.py',252),
+  ('class_stmt -> CLASSSYM IDENT LPAREN RPAREN SUPER IDENT stmt_list END SEMICOLON END','class_stmt',10,'p_class','oop_interpreterext.py',253),
+  ('param_list -> IDENT COMMA param_list','param_list',3,'p_param_list','oop_interpreterext.py',261),
+  ('param_list -> IDENT','param_list',1,'p_param_list','oop_interpreterext.py',262),
+  ('list -> LBRACKET sequence RBRACKET','list',3,'p_list','oop_interpreterext.py',271),
+  ('list -> LBRACKET RBRACKET','list',2,'p_list','oop_interpreterext.py',272),
+  ('sequence -> listelement COMMA sequence','sequence',3,'p_sequence','oop_interpreterext.py',279),
+  ('sequence -> listelement','sequence',1,'p_sequence','oop_interpreterext.py',280),
+  ('listelement -> list','listelement',1,'p_listelement','oop_interpreterext.py',314),
+  ('listelement -> NUMBER','listelement',1,'p_listelement','oop_interpreterext.py',315),
+  ('func_call -> IDENT LPAREN RPAREN','func_call',3,'p_func_call','oop_interpreterext.py',319),
+  ('func_call -> IDENT LPAREN expr_list RPAREN','func_call',4,'p_func_call','oop_interpreterext.py',320),
+  ('prop_func_call -> property LPAREN expr_list RPAREN','prop_func_call',4,'p_prop_func_call','oop_interpreterext.py',327),
+  ('prop_func_call -> property LPAREN RPAREN','prop_func_call',3,'p_prop_func_call','oop_interpreterext.py',328),
 ]

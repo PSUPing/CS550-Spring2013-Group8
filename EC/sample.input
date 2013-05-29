@@ -1,6 +1,6 @@
 class test(num)
 L := num;
-add := proc(x) return := cons(x,L) end;
+Cons := proc(x) return := cons(x,L) end;
 Car :=proc() return := car(L) end;
 Cdr :=proc() return := cdr(L) end
 end;

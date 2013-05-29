@@ -101,7 +101,10 @@ class Number( Expr ) :
 # This class will allow for differentiation between a "List" and a "Sequence"
 class ListType( Expr ) :
 	def __init__(self, lst = []):
-		self.listVals = lst
+		if lst==[]:
+			self.listVals = lst[:]
+		else:
+			self.listVals=lst
 	
 	def eval( self, nt ) :
 		return self.listVals
@@ -214,10 +217,13 @@ class FunCall( Expr ) :
 	'''stores a function call:
           - its name, and arguments'''
 	
-	def __init__( self, name, argList ) :
+	def __init__( self, name, argList=[] ) :
 		self.name = name
 		self.builtins = ['cons', 'car', 'cdr', 'nullp', 'intp', 'listp']
-		self.argList = argList
+		if argList==[]:
+			self.argList = argList[:]
+		else:
+			self.argList = argList
 	
 	def eval( self, nt ) :
 		# Used for "built-in" functions
@@ -237,7 +243,7 @@ class FunCall( Expr ) :
 
 			# Adds param1 (int / list) to the list in param2
 			if self.name == 'cons' :
-				if type(param2) is list :
+				if type(param2) ==type([]) :
 					return common.cons(param1, param2)
 				else :
 					print('cons error: Must specify two parameters and the second parameter must be a list')
@@ -276,6 +282,26 @@ class FunCall( Expr ) :
 		for e in self.argList :
 			e.display( nt,  depth+1 )
 
+class PropFunCall( Expr ) :
+	'''stores a function call:
+          - its name, and arguments'''
+	
+	def __init__( self, prop, argList=[] ) :
+		self.prop = prop
+		if argList==[]:
+			self.argList = argList[:]
+		else:
+			self.argList = argList
+	
+	def eval( self, nt ) :
+		return self.prop.eval(nt).apply( nt,self.argList )
+
+	def display( self,  depth=0 ) :
+		print "%sFunction Call: %s, args:" % (tabstop*depth, self.name)
+		for e in self.argList :
+			e.display( nt,  depth+1 )
+
+
 class Proc(Expr) :
 	'''stores a procedure (formal params, and the body)
 		
@@ -286,16 +312,18 @@ class Proc(Expr) :
 		the calling environment (after the actual args are evaluated); the proc
 		doesn't need/want/get an outside environment.'''
 	
-	def __init__( self, paramList, body ) :
+	def __init__( self,body, paramList=[] ) :
 		'''expects a list of formal parameters (variables, as strings), and a
 			StmtList'''
 		
-		self.parList = paramList
+		if paramList==[]:
+			self.parList = paramList[:]
+		else:
+			self.parList = paramList
 		self.body = body
 
 	def eval( self ,nt):
 		newEnv = Environment(nt)
-		newEnv.addFrame()
 		self.env=newEnv
 		return self
 	
@@ -333,7 +361,7 @@ class Proc(Expr) :
 
 class Property(Expr):
 	def __init__(self, string):
-		string=string.split(',')
+		string=string.split('.')
 		self.objName=string[0]
 		self.propName=string[1]
 	
@@ -353,15 +381,13 @@ class Class() :
 	def eval( self ,nt):
 		nt.set(self.name, self)
 		newEnv = Environment(nt)
-		newEnv.addFrame()
 		self.env=newEnv
 	
 	def apply( self, nt, args) :
-				# sanity check, # of args
 		if len( args ) is not len( self.parList ) :
 			print "Param count does not match:"
 			sys.exit( 1 )
-	
+				# sanity check, # of args
 		if self.superClassName is not None:
 			self.superClass=nt.get(self.superClassName).apply(nt,args)
 		else:
@@ -384,11 +410,13 @@ class Class() :
 		return self
 	
 	def getSub(self,sub, nt):
-		if self.env.env[0].contains(sub):
-			return self.env.get(sub)
-		elif self.superClass is not None and self.superClass.env.env[0].contains(sub):
+		try:
+			return self.env.env[0][sub]
+		except:
+			pass
+		try:
 			return self.superClass.env.get(sub)
-		else:
+		except:
 			raise LookupError("Class does not have the given property or method")
 
 	def display( self, nt,depth=0 ) :
@@ -532,6 +560,7 @@ class Environment :
 			store=self.env[1].get(ident)
 		except:
 			raise LookupError("Identifier not in the environment")
+		return store
 
 	def set(self,ident,value):
 		self.env[0][ident]=value
@@ -540,7 +569,7 @@ class Environment :
 		s=''
 		s+=str(self.env[0])
 		try:
-			s+=str(self.env[1])
+			s+=','+str(self.env[1])
 		except:
 			pass
 		return s

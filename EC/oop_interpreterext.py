@@ -97,7 +97,6 @@ def t_PROP(t):
 
 def t_IDENT( t ):
 	r'[a-zA-Z_][a-zA-Z_0-9]*'
-	print t
 	t.type = reserved.get( t.value, 'IDENT' )    # Check for reserved words
 	return t
 
@@ -213,6 +212,11 @@ def p_fact_funcall( p ) :
 	'fact : func_call'
 	p[0] = p[1]
 
+def p_fact_prop_funcall( p ) :
+	'fact : prop_func_call'
+	p[0] = p[1]
+
+
 def p_fact_proc( p ) :
 	'fact : proc'
 	p[0] = p[1]
@@ -225,6 +229,10 @@ def p_fact_property( p ) :
 	'fact : property'
 	p[0] = p[1]
 
+def p_property(p):
+	'property : PROP'
+	p[0] = Property(p[1])
+
 def p_while( p ) :
 	'while_stmt : WHILE expr DO stmt_list OD'
 	p[0] = WhileStmt( p[2], p[4] )
@@ -236,7 +244,10 @@ def p_if( p ) :
 def p_proc(p):
 	'''proc : PROC LPAREN param_list RPAREN stmt_list END
 		| PROC LPAREN RPAREN stmt_list END'''
-	p[0] = Proc( p[3], p[5] )
+	if len(p)==7:
+		p[0] = Proc( p[5], p[3] )
+	else:
+		p[0] = Proc( p[4] )
 
 def p_class(p):
 	'''class_stmt : CLASSSYM IDENT LPAREN param_list RPAREN stmt_list END
@@ -258,9 +269,6 @@ def p_param_list( p ) :
 		p[3].insert( 0, p[1] )
 		p[0] = p[3]
 
-def p_property(p):
-	'''property : PROP'''
-	p[0] = Property(p[1])
 
 def p_list(p):
 	'''list : LBRACKET sequence RBRACKET
@@ -311,8 +319,21 @@ def p_listelement(p):
 	p[0] = p[1]
 
 def p_func_call( p ) :
-	'func_call : IDENT LPAREN expr_list RPAREN'
-	p[0] = FunCall( p[1], p[3] )
+	'''func_call : IDENT LPAREN RPAREN
+		| IDENT LPAREN expr_list RPAREN '''
+	if len(p)==5:
+		p[0] = FunCall( p[1], p[3] )
+	else:
+		p[0] = FunCall( p[1] )
+
+def p_prop_func_call( p ) :
+	'''prop_func_call : property LPAREN expr_list RPAREN		
+		| property LPAREN RPAREN'''
+	if len(p)==5:
+		p[0] = PropFunCall( p[1], p[3] )
+	else:
+		p[0] = PropFunCall( p[1] )
+
 
 # Error rule for syntax errors
 def p_error( p ):
