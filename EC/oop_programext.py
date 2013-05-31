@@ -575,7 +575,15 @@ class Environment :
 		return store
 
 	def set(self,ident,value):
-		self.env[0][ident]=value
+		try:
+			self.get(ident)
+			try:
+				a=self.env[0][ident]
+				self.env[0][ident]=value
+			except:
+				self.env[1].set(ident,value)
+		except:
+			self.env[0][ident]=value
 
 	def __str__(self):
 		s=''
