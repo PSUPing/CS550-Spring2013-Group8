@@ -1,0 +1,30 @@
+NOTE: Functions are not a subset of statments by themselves. You must assign
+the reuslt to a variable. Also every function must have a returns value.
+
+To run: type make run <sample.input or sample.input2 etc
+
+sample.input: A test that creates a class, instantiates it and then changes
+the state and sees that the values are what they should be
+
+sample.input2: A test that is the same as the first one but instantiates 2
+objects and modifies them separately.
+
+sample.input3: A test to demonstrate inheretance.
+
+common.py: defines the list functions in a separate file.
+
+oop_interpreterext.py: The interpreter for the oop. Calls the
+oop_programext.py file to implement the backend
+
+oop_programext.py: Implements the back end. Is very similar to A6 except
+with the addition of objects and properties. Objects are pretty much just a
+renaming of functions. When they are called they create a copy of themselves
+and run their constructor and return the result. Also a new type called
+property is returned that is just <object name>.<property name>. It works by
+checking for essentially ident.ident in the parser and then it separates it
+in the function call. Inheritance is implemented by calling the constructor
+of the parent class by matching the names of the subclass's constructor
+against those of the superclass. When they match they are passed. When a
+property is evaluated it first checks the subclasses frame and then the
+super classes frame and if it is in neither of those places it throws an
+error.

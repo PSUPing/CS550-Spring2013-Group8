@@ -418,10 +418,6 @@ class Class() :
 		return t
 	
 	def getSub(self,sub, nt):
-		print sub
-		print self.env
-		if self.superClass is not None:
-			print self.superClass.env
 		try:
 			return self.env.env[0][sub]
 		except:

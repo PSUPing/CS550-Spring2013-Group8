@@ -1,6 +1,22 @@
-makeaccount := proc (n) return := proc(a) n:=n-a; return:=n end end; 
-withdrawl:= makeaccount(500);
-n:=300;
-newtotala:=withdrawl(50);
-newtotalb:=withdrawl(50);
-newtotalc:=withdrawl(50)
+class superobject(num)
+super := num;
+Cons := proc(x) return := cons(x,L) end;
+Car :=proc() return := car(L) end;
+Cdr :=proc() return := cdr(L) end
+end;
+
+class subobjectA(num):superobject
+local:=num
+end;
+
+class subobjectB(num):superobject
+local:=num
+end;
+
+subA:=subobjectA([3]);
+subB:=subobjectB([5]);
+
+subALocal:=subA.local;
+subBLocal:=subB.local;
+subAsuper:=subA.super;
+subBsuper:=subB.super

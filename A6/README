@@ -1,0 +1,30 @@
+To run: do make run-static < sample.input and run-dynamic < sample.input
+
+sample.input: A piece of example code that demonstrates the difference
+between the staic and dynamic copies.
+
+common.py: the functions for lists separated into a separate file
+
+dynamic_interpreterext.py: The interpreter that runs with dynamic memory and
+calls elements of dynamic_programext.py
+
+dynamic_programext.py: This includes all the classes to form the back end of
+the interpreter. It does this by maintaining an environment variable that 
+consits of a dictionary and a reference to another environment. A new 
+environment is made everytime a function is called. It extends the callers
+environment. The only other major change is that function definitions are now
+expressions. When the are evaled it returns the proc object and when apply
+is called it just applies the function to the arguments
+
+static_interpreterext.py: The interpreter that runs with static memory and
+calls elements of static_programext.py. 
+
+static_programext.py: This includes all the classes to form the back end of
+the interpreter. It does this by maintaining an
+environment variable that consits of a dictionary and a reference to another
+environment. A new environment is made everytime a function is defined or
+called. when called it extends the environment made when the function is
+defined. The only other major change is that function definitions are now
+expressions. When the are evaled it returns the proc object and when apply
+is called it just applies the function to the arguments
+

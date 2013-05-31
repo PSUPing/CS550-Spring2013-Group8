@@ -1,0 +1,24 @@
+sample.input: This test defines a class with a variable L that is passed in
+through the constructor. It also has 3 functions which ar cons car and cdr
+(spelled backwards) that are performed on the variable L. The test is to 
+instanciate a test object with [] and then cons 3 2 and 1 to it then set
+a variable equal to the car and cdr of the object. The result should be the
+list being [1,2,3], listcar being 1, listcdr being [2,3]
+
+sample.input2: Same as above excpet two lists are made and the second one
+performs cons on 4 5 and 6. The calls are intermingled and then they the
+car and cdr of each are set to variables. The result should be ListA=[1,2,3]
+listACar=1, listACdr=[2,3], ListB=[6,5,4], ListBCar=6, ListBCdr=[5,4] 
+
+sample.input3: A class called superobject is created that is a copy of the
+class created above. Then two subclasses are made called subobjectA and
+subobjectB. both of them have a local variable named local that is set to
+the variable passed through the constructor. Then both are instantiated
+subA is a subobjectA with the variable [3] passed. subB is a subobjectB with
+the variable [5] passed. Then some variables are set to the local and super
+variables of both so they can be viewed. The subALocal should be [3]. The
+subBLocal should be [5]. The subAsuper should be [3]. The subBsuper should
+be [5]. This is because local is the variable passed and then it is passed
+to the super constructor which sets super to the same value. The main
+purpose of this is to demonstrate that both can have different
+instantiations of the super class with independent values.

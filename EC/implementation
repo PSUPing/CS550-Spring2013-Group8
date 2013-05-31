@@ -1,0 +1,12 @@
+The way we implemented this was to have an environment variable that stored
+its own dictionary of values and then a reference to the environment in
+which it was defined. When a class is evaluated, it initializes its
+environment. When it is instantiated, it calls its apply method, which
+creates a copy of the object, then performs the apply with the given params
+and then returns the copy of itself (so that they can be independent of
+other instantiations). When it is instantiated, it first tries to match its
+parameter list to the names of the formal parameters in the super class (if
+there is one). It then reorders them to match the formal parameter list and
+then calls the superclasss constructor. Then it continues with its own. In
+theory this should allow as many levels of super classing as is necessary
+(as long as its not circular)

@@ -10,15 +10,22 @@ VIEW=more
 all: view-part1 build view-func1 view-func2 view-part2 run-part2 clean
 .PHONY : all
 
-compile-static:
-	echo "no need to compile"
-
-compile-dynamic:
-	echo "no need to compile"
-
 run: oop_interpreterext.py
 	python oop_interpreterext.py
 
+view-semantics: semantics
+	cat semantics
+
+view-implementation: implementation
+	cat implementation
+
+view-code: common.py oop_interpreterext.py oop_programext.py
+	cat common.py
+	cat oop_interpreterext.py
+	cat oop_programext.py
+
+view-tests: testDescriptions
+	cat testDescriptions
 
 clean:
 	-@rm parser.out 2> /dev/null

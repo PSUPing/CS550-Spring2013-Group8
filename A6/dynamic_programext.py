@@ -286,10 +286,11 @@ class Proc(Expr) :
 		the calling environment (after the actual args are evaluated); the proc
 		doesn't need/want/get an outside environment.'''
 	
+#this was changed so that proc is a type of expression. When it is evaluated
+#it returns itself. When it is applied it calls itself on the params
 	def __init__( self, paramList, body ) :
 		'''expects a list of formal parameters (variables, as strings), and a
 			StmtList'''
-		
 		self.parList = paramList
 		self.body = body
 
@@ -452,6 +453,9 @@ class Program :
 		print "%sPROGRAM :" % (tabstop*depth)
 		self.stmtList.display( self.nameTable)
 
+#This stores the environment. Each environment is a list of the current
+#frame followed by a reference to another environment or just a list of one
+#element consisting of the current frame
 class Environment :
 	def __init__(self,copy=None):
 		if copy==None:
@@ -459,6 +463,7 @@ class Environment :
 		else:
 			self.env=[{},copy]
 	
+#check the lowest frame and then search the rest
 	def get(self,ident):
 		try:
 			store=self.env[0][ident]
@@ -472,6 +477,8 @@ class Environment :
 			pass
 		raise LookupError("Identifier not in the environment")
 
+#if the variable already has a value, find the value and change it in that
+#frame. Otherwise create it in the local environment
 	def set(self,ident,value):
 		try:
 			self.get(ident)
@@ -483,6 +490,7 @@ class Environment :
 		except:
 			self.env[0][ident]=value
 
+#print the environment
 	def __str__(self):
 		s=''
 		s+=str(self.env[0])

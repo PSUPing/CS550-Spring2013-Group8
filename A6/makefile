@@ -22,6 +22,12 @@ run-static: static_interpreterext.py
 run-dynamic: dynamic_interpreterext.py
 	python dynamic_interpreterext.py
 
+view: dynamic_interpreterext.py static_interpreterext.py static_programext.py dynamic_programext.py common.py
+	more static_interpreterext.py
+	more static_programext.py
+	more dynamic_interpreterext.py
+	more dynamic_programext.py
+	more common.py
 
 clean:
 	-@rm parser.out 2> /dev/null

@@ -1,13 +1,19 @@
-class test(num)
+class object(num)
 L := num;
 noc := proc(x) return := cons(x,L) end;
 rac :=proc() return := car(L) end;
 rdc :=proc() return := cdr(L) end
 end;
 
-L:=test([]);
-A:=L.noc(3);
-B:=L.noc(2);
-C:=L.noc(1);
-x:=L.rac();
-M:=L.rdc()
+ListAObject:=object([]);
+ListA:=ListAObject.noc(3);
+ListA:=ListAObject.noc(2);
+ListBObject:=object([]);
+ListB:=ListBObject.noc(4);
+ListB:=ListBObject.noc(5);
+ListB:=ListBObject.noc(6);
+CarB:=ListBObject.rac();
+CdrB:=ListBObject.rdc();
+ListA:=ListAObject.noc(1);
+CarA:=ListAObject.rac();
+CdrA:=ListAObject.rdc()

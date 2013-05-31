@@ -1,0 +1,18 @@
+the syntax is as follows:
+
+class <ident>(<paramList>)[:<ident>]
+<stmtList>
+end
+
+where brackets indicate optional elements
+
+Identifies have been modified so they can include upper case letters, lower
+case letters, underscore, and numbers as long as the numbers are not the
+first character in the identifier name
+the paramList can be empty. No function can lack a return value or can be a
+stand alone instruction. All of them must have variable set to their value.
+
+The viarables in <paramList> must be a super set of the paramList for the
+superclass. They are then matched to the parameters of the super class based
+on the name that they are given in the formal parameter list. If they do not
+match it throws an error.
