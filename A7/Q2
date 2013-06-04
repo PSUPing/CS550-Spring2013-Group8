@@ -1,0 +1,1 @@
+Because wheel is called with the ?who variable, that means that every instance of a supervisor is going to be tested against the ?person entry, which in this case would be Oliver Warbucks.  Since this loops around, an extra Oliver entry appears.  

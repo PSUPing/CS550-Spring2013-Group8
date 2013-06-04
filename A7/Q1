@@ -1,0 +1,5 @@
+a) Use the form: (meeting ?x (day-of-week ?y)) to find all meetings for that day where "day-of-week" is a day of the week.  For example, to find all meetings on Wednesday, use the following query: (meeting ?x (Wednesday ?y))
+
+b) The meeting-time query uses the job type for the rest of the query
+
+c) (meeting-time (Hacker Alyssa P) (Wednesday ?x))
