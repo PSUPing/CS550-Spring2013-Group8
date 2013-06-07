@@ -546,6 +546,22 @@
 
 (define put '())
 
+(define unique-query car)
+
+(define (singleton-stream? frame-stream)
+  (and (not (stream-null? frame-stream))
+       (stream-null? (stream-cdr frame-stream))))
+
+(define (uniquely-asserted operands frame-stream)
+  (stream-flatmap
+   (lambda (frame)
+     (let ((result (qeval (unique-query operands)
+                          (singleton-stream frame))))
+       (if (singleton-stream? result)
+           result
+           the-empty-stream)))
+   frame-stream))
+
 (define (initialize-data-base rules-and-assertions)
   (define (deal-out r-and-a rules assertions)
     (cond ((null? r-and-a)
@@ -665,3 +681,5 @@
 
 (initialize-data-base microshaft-data-base)
 (query-driver-loop)
+
+(put 'unique 'qeval uniquely-asserted)
