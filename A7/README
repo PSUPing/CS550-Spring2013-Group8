@@ -12,6 +12,6 @@ Q3.scm - This file is the scheme file for the answer to Question 4.68 of SICP.  
 
 Q3.pl - This file is the prolog file for the answer to question 4.68 of SICP.  After loading, the method name is "my_reverse".  This was done because reverse is a reserved word in prolog.  An example is my_reverse([1,2,3],X).
 
-Q4.scm - This is the file for the answer to question 4.75 of SICP.  
+Q4/Q4.scm - This is the file for the answer to question 4.75 of SICP.  The "Q4.scm" file should be loaded into scheme.  Q4 contains the text that should be copied and pasted into the ";;; Query input:" prompt. 
 
 mini.pl - This is the answer to question 5, which asked for a prolog implementation of the mini-language.  The language should be called using the "reduce_all(config(P,BeginEnv),EndEnv)." convention.  
