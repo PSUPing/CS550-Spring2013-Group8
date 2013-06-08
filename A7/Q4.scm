@@ -546,22 +546,6 @@
 
 (define put '())
 
-(define unique-query car)
-
-(define (singleton-stream? frame-stream)
-  (and (not (stream-null? frame-stream))
-       (stream-null? (stream-cdr frame-stream))))
-
-(define (uniquely-asserted operands frame-stream)
-  (stream-flatmap
-   (lambda (frame)
-     (let ((result (qeval (unique-query operands)
-                          (singleton-stream frame))))
-       (if (singleton-stream? result)
-           result
-           the-empty-stream)))
-   frame-stream))
-
 (define (initialize-data-base rules-and-assertions)
   (define (deal-out r-and-a rules assertions)
     (cond ((null? r-and-a)
@@ -583,6 +567,30 @@
   (let ((operation-table (make-table)))
     (set! get (operation-table 'lookup-proc))
     (set! put (operation-table 'insert-proc!)))
+
+
+;;; Check to determine if the frame is a singleton
+(define (singleton-stream? frame)
+  (and (not (stream-null? frame))
+       (stream-null? (stream-cdr frame))))  
+
+;;; Method for determining uniqueness
+;;; Works by rejecting any frame that does not have one item 
+;;; Streams are aggregated in the "answer" variable
+(define (unique query stream-frame)
+  (stream-flatmap
+    (lambda (frame)
+      (let ((answer (qeval (car query)
+        (singleton-stream frame))))
+        (if (singleton-stream? answer)
+          answer
+          the-empty-stream)))
+    stream-frame))
+
+  ;;; "put" for unique method
+  (put 'unique 'qeval unique)
+  
+  ;;; Original "puts"
   (put 'and 'qeval conjoin)
   (put 'or 'qeval disjoin)
   (put 'not 'qeval negate)
@@ -681,5 +689,3 @@
 
 (initialize-data-base microshaft-data-base)
 (query-driver-loop)
-
-(put 'unique 'qeval uniquely-asserted)
