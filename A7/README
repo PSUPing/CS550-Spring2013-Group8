@@ -1,0 +1,15 @@
+Assignment 7 - Query Language and Logic Programming
+Group 8
+
+Kyle Paton
+Matt Ping
+
+Q1/Q1.scm - These two files represent the solution to Question 4.59 of SICP.  The Q1 file is a text file containing the written answers to parts a, b, c of the question.  Q1.scm is the file that can be loaded in scheme to execute the answers described in the Q1 text file.
+
+Q2 - This is a text file with the written answer to Question 4.65 of SICP.  
+
+Q3.scm - This file is the scheme file for the answer to Question 4.68 of SICP.  In order to run this, copy and paste the assertions into the ";;; Query input:" prompt.  After doing so, you can run the reverse method.  An example is (reverse (1 2 3) ?x)
+
+Q3.pl - This file is the prolog file for the answer to question 4.68 of SICP.  After loading, the method name is "my_reverse".  This was done because reverse is a reserved word in prolog.  An example is my_reverse([1,2,3],X).
+
+Q4.scm - This is the file for the answer to question 4.75 of SICP.  

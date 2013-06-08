@@ -1,5 +1,10 @@
+(assert! (rule (append-to-form () ?x ?x)))
+
+(assert! (rule (append-to-form (?a . ?b) ?c (?a . ?d))
+	(append-to-form ?b ?c ?d)))
+
 (assert! (rule (reverse () ())))
-(assert! (rule (reverse ?start . ?end) 
-	(and (append-to-form (?head) ?rest ?start) 
-		(append-to-form ?tail2 (?head) ?end) 
-		(reverse ?rest ?tail2))))
+
+(assert! (rule (reverse (?head . ?tail) ?q)
+	(and (reverse ?tail ?rtail)
+		(append-to-form ?rtail (?head) ?q))))
