@@ -1,32 +1,119 @@
-% Part I of assignment 4
+% The following prolog rules implement the reductions for the mini language in
+% section 13.2 of Kenneth Louden, Programming Languages: Principles and Practice, 2nd Ed.
+% Thomson Course Technology, 2003.
+% Author:  Jeremy Johnson
+% Date: 3/20/2007.
+%
+% Program syntax:  
+%         config(E,Env) | config(P,Env)
+%         E ::= plus(E1,E2) | minus(E1,E2) | times(E1,E2) | Ident | Number
+%         P ::= S | seq(S,P)
+%         S ::= assign(I,E) | if(E,P,P) | while(E,P)
+%         Env ::= [] | [Binding | Env]
+%         Binding ::= value(Ident,Number)
+%
+% Program semantics:  
+%         The execution of a program results in an Environment.
+%         The resulting environment is defined by the following reduction rules.
+%
+% Notes:  I have chosen to have a separate predicates, reduce_exp_all, and reduce_exp,
+%         for expressions.  These take a configuration with an expression and reduce it 
+%         to a value.
+%         The reduce_all and reduce predicates take a configuration with a statement or 
+%         statement sequence and reduce it to an environment.
+%         To evaluate a program P, reduce_all(config(P),[]).
+% 
+% Test cases:
+%         reduce_exp_all(config(plus(times(2,5),minus(2,5)),[]),V).
+%             V = config(7,[])
+%         reduce_exp_all(config(plus(times(x,5),minus(2,y)),[value(x,2),value(y,5)]),V).
+%             V = config(7,[value(x,2),value(y,5)])
+%         reduce_all(config(seq(assign(x,3),assign(y,4)),[]),Env).
+%             Env = [value(x,3),value(y,4)]
+%         reduce(config(if(3,assign(x,3),assign(x,4)),[]),Env).
+%             Env = [value(x,3)]
+%         reduce(config(if(0,assign(x,3),assign(x,4)),[]),Env).
+%             Env = [value(x,4)]
+%         reduce_all(config(if(n,assign(i,0),assign(i,1)),[value(n,3)]),Env).
+%             Env = [value(n,3),value(i,0)]
+%         reduce_all(config(while(x,assign(x,minus(x,1))),[value(x,3)]),Env).
+%             Env = [value(x,0)]
+%         reduce_all(config(
+%                       seq(assign(n,minus(0,3)),
+%                       seq(if(n,assign(i,n),assign(i,minus(0,n))),
+%                       seq(assign(fact,1),
+%                           while(i,seq(assign(fact,times(fact,i)),assign(i,minus(i,1)))))))
+%                       ,[]),Env).
+%             Env = [value(n,-3),value(i,0),value(fact,6)]
+% Auxiliary predicates for environments.
+
+lookup([value(I,V)|_],I,V).
+lookup([_|Es],I,V) :- lookup(Es,I,V), !.
+
+% add predicate update(Env,value(I,V),Env1) which is true when the binding
+% value(I,V) added to the environment Env produces the updated environment
+% Env2.
+
+update([],value(I,V),[value(I,V)]).
+update([value(I,_)|Es],value(I,V2),[value(I,V2)|Es]).
+update([H|Es],value(I,V),[H|Env]) :- update(Es,value(I,V),Env), !.
+
 % reduction rules for arithmetic expressions.
-% Author: Jeremy Johnson
 
-% test cases.
-%
-% reduce_all(times(plus(2,3),minus(5,1)),V).
-%    V = 20 ?
-%
+% rules (7) - (9), which reduce the first operand of an expression
 
-reduce(config(plus(E,E2),Env),config(plus(E1,E2),Env)) :- reduce(config(E,Env),config(E1,Env)).
-reduce(config(I,Env),config(V,Env)) :- atom(I), lookup(Env,I,V).
+reduce_exp(config(plus(E,E2),Env),config(plus(E1,E2),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
+reduce_exp(config(minus(E,E2),Env),config(minus(E1,E2),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
+reduce_exp(config(times(E,E2),Env),config(times(E1,E2),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
 
-reduce(plus(E,E2),plus(E1,E2)) :- reduce(E,E1).
-reduce(minus(E,E2),minus(E1,E2)) :- reduce(E,E1).
-reduce(times(E,E2),times(E1,E2)) :- reduce(E,E1).
+% rules (10) - (12), which reduce the second operand of an expression
 
-reduce(plus(V,E),plus(V,E1)) :- reduce(E,E1).
-reduce(minus(V,E),minus(V,E1)) :- reduce(E,E1).
-reduce(times(V,E),times(V,E1)) :- reduce(E,E1).
+reduce_exp(config(plus(V,E),Env),config(plus(V,E1),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
+reduce_exp(config(minus(V,E),Env),config(minus(V,E1),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
+reduce_exp(config(times(V,E),Env),config(times(V,E1),Env)) :- reduce_exp(config(E,Env),config(E1,Env)).
 
-reduce(plus(V1,V2),R) :- integer(V1), integer(V2), !, R is V1+V2.
-reduce(minus(V1,V2),R) :- integer(V1), integer(V2), !, R is V1-V2.
-reduce(times(V1,V2),R) :- integer(V1), integer(V2), !, R is V1*V2.
+% rules (3) - (5), which reduce an expression involving integers
 
-reduce_value(config(E,Env),V) :- reduce_all(config(E,Env),config(V,Env)).
+reduce_exp(config(plus(V1,V2),Env),config(R,Env)) :- integer(V1), integer(V2), !, R is V1+V2.
+reduce_exp(config(minus(V1,V2),Env),config(R,Env)) :- integer(V1), integer(V2), !, R is V1-V2.
+reduce_exp(config(times(V1,V2),Env),config(R,Env)) :- integer(V1), integer(V2), !, R is V1*V2.
 
-reduce_all(config(V,Env),config(V,Env)) :- integer(V), !.
-reduce_all(config(E,Env),config(E2,Env)) :- reduce(config(E,Env),config(E1,Env)),
-reduce_all(config(E1,Env),config(E2,Env)).
-reduce_all(V,V) :- integer(V), !.
-reduce_all(E,E2) :- reduce(E,E1), reduce_all(E1,E2).
+% rule (15), which reduces an identifier to its value.
+
+reduce_exp(config(I,Env),config(V,Env)) :- atom(I), !, lookup(Env,I,V).
+
+% rule (14), which applies transitive reductions.
+
+reduce_exp_all(config(V,Env),config(V,Env)) :- integer(V), !.
+reduce_exp_all(config(E,Env),config(E2,Env)) :- reduce_exp(config(E,Env),config(E1,Env)), reduce_exp_all(config(E1,Env),config(E2,Env)).
+
+reduce_value(config(E,Env),V) :- reduce_exp_all(config(E,Env),config(V,Env)).
+
+% reduction rules for statement sequence
+% rules (18) and (14) to allow transitive reductions.
+
+% rules (16) - (17) combined for assignment statements
+reduce_assign(config(assign(I,E),Env),Env1) :- reduce_exp_all(config(E,Env),config(V,Env)), update(Env,value(I,V),Env1).
+
+% rules (20) - (22) for if statements
+reduce_if_exp(config(if(E,L1,L2),Env),Env1) :- reduce_exp_all(config(E,Env),config(V,Env)),reduce_if(config(if(V,L1,L2),Env),Env1).
+reduce_if(config(if(V,L1,_),Env),Env1) :- V>0,reduce_seq_prog(config(L1,Env),Env1).
+reduce_if(config(if(V,_,L2),Env),Env1) :- V=<0,reduce_seq_prog(config(L2,Env),Env1).
+
+%% rules (23) - (24) for while statements
+reduce_while(config(while(E,_),Env),Env) :- reduce_exp_all(config(E,Env),config(V,Env)),V=<0.
+reduce_while(config(while(E,L),Env),Env2) :- reduce_exp_all(config(E,Env),config(V,Env)),V>0,reduce_seq_prog(config(L,Env),Env1),reduce_while(config(while(E,L),Env1),Env2).
+
+%% Sequence Rules
+
+reduce_seq(config(S,Env),Env1) :- reduce_assign(config(S,Env),Env1).
+reduce_seq(config(S,Env),Env1) :- reduce_if_exp(config(S,Env),Env1).
+reduce_seq(config(S,Env),Env1) :- reduce_while(config(S,Env),Env1).
+
+reduce_seq_prog(config(S1,Env),Env1) :- reduce_seq(config(S1,Env),Env1).
+reduce_seq_prog(config(seq(S1),Env),Env1) :- reduce_seq(config(S1,Env),Env1).
+reduce_seq_prog(config(seq(S1,S2),Env),Env2) :- reduce_seq(config(S1,Env),Env1),reduce_seq_prog(config(S2,Env1),Env2).
+
+%% Program Rules
+
+reduce_all(config(P,Env),Env1) :- reduce_seq_prog(config(P,Env),Env1).
