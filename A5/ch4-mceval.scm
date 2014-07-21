@@ -33,8 +33,21 @@
         ((application? exp)
          (apply (eval (operator exp) env)
                 (list-of-values (operands exp) env)))
+;;;; Change to support calling "eval-let"
+        ((let? exp) (eval-let exp env))
         (else
          (error "Unknown expression type -- EVAL" exp))))
+
+(define (eval-let exp env)
+  (if (null? exp)
+    exp
+    (if (eq? (car exp) 'let)
+      (begin (eval-assignment (cadr exp) env)
+        (eval-let (cdr exp) env))
+      (begin (eval-assignment (car exp) env)
+        (eval-let (cdr exp) env)))))
+
+(define (let? exp) (tagged-list? exp 'let))
 
 (define (apply procedure arguments)
   (cond ((primitive-procedure? procedure)
@@ -351,7 +364,7 @@
 
 ;;;Following are commented out so as not to be evaluated when
 ;;; the file is loaded.
-;;(define the-global-environment (setup-environment))
-;;(driver-loop)
+(define the-global-environment (setup-environment))
+(driver-loop)
 
 'METACIRCULAR-EVALUATOR-LOADED
